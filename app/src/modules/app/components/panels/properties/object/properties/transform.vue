@@ -164,7 +164,7 @@
 </div>
 </template>
 <script>
-import Utility from '../../../../../../../utils/Utility';
+import Utility from '../../../../../../../core/utils/Utility';
 
 export default
 {

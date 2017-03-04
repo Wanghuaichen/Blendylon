@@ -55,8 +55,8 @@
 </template>
 <script>
 import path from 'path'
-import cp from 'child_process'
-import Utility from '../../../../../../utils/Utility'
+//import cp from 'child_process'
+import Utility from '../../../../../../core/utils/Utility'
 import InputText from '../../../../../../core/fields/text.vue'
 import {mapGetters, mapActions} from 'vuex'
 export default {
@@ -74,16 +74,16 @@ export default {
         currentCamera: 'getCurrentCamera'
     }),
     created() {
-        require('dns').lookup(require('os').hostname(), (err, addr, fam) => {
-            this.server.address = addr;
-        })
+//        require('dns').lookup(require('os').hostname(), (err, addr, fam) => {
+//            this.server.address = addr;
+//        })
     },
     methods: {
         toggleServer()
         {
             if(!this.server.started)
             {
-                this.instance = cp.fork('C:\\wamp\\www\\Warlight\\Tools\\Editor\\app\\src\\servers\\mobile\\server.js')
+//                this.instance = cp.fork('C:\\wamp\\www\\Warlight\\Tools\\Editor\\app\\src\\servers\\mobile\\server.js')
 
                 this.instance.on('error', (err) => {
                     console.log(err)

@@ -9,7 +9,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  target: "electron",
+  target: "web",
   entry: './app/src/main.js',
   plugins: [
     new webpack.DefinePlugin({
@@ -22,29 +22,26 @@ module.exports = {
     path: path.resolve(__dirname, './app/dist'),
     filename: 'build.js'
   },
-  exclude: [/bower_components/, /node_modules/],
+  resolveLoader: {
+    root: path.join(__dirname, 'node_modules'),
+  },
   module: {
     loaders: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: 'vue-loader',
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: [/node_modules/, /bower_components/],
-        query: {
-          plugins: ['transform-runtime'],
-          presets: ["es2015", "stage-2"],
-        }
+        exclude: [/node_modules/, /bower_components/]
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
         loader: 'file-loader?name=/dist/img/[name].[ext]?[hash]',
       }
     ]
-  },
-  devtool: '#eval-source-map'
+  }
 };
 
 if(process.env.NODE_ENV === 'production')

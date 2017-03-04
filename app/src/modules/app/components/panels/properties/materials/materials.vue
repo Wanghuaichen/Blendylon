@@ -41,7 +41,7 @@
     </div>
 </template>
 <script type="text/babel">
-import Utility           from '../../../../../../utils/Utility'
+import Utility           from '../../../../../../core/utils/Utility'
 import StandardMaterial  from './types/standard.vue'
 import FurMaterial       from './types/fur.vue'
 import FireMaterial      from './types/fire.vue'

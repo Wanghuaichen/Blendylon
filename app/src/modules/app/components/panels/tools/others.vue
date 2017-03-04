@@ -15,8 +15,8 @@
     </div>
 </template>
 <script>
-import CST from '../../../../../utils/CST';
-import Utility from '../../../../../utils/Utility';
+import CST from '../../../../../core/utils/CST';
+import Utility from '../../../../../core/utils/Utility';
 export default {
     name:'tools_others',
     data() {

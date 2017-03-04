@@ -5,7 +5,7 @@
  * Written by Mel Florance <mel.florance@gmail.com>, 2017
  */
 
-import CST from '../../../../../../utils/CST'
+import CST from '../../../../../../core/utils/CST'
 
 export default class Line
 {

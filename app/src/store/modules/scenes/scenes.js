@@ -6,8 +6,8 @@
  */
 
 import shortid from 'shortid'
-import CST from '../../../utils/CST'
-import Utility from '../../../utils/Utility'
+import CST from '../../../core/utils/CST'
+import Utility from '../../../core/utils/Utility'
 import Input from '../../../core/inputs/input';
 import
 {

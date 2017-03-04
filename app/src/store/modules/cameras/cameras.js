@@ -6,7 +6,7 @@
  */
 
 import Vue from 'vue'
-import CST from '../../../utils/CST'
+import CST from '../../../core/utils/CST'
 import {CAMERAS, CURSORS} from '../../mutations-types'
 
 const Store =

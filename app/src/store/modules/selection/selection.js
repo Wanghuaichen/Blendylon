@@ -6,7 +6,7 @@
  */
 
 import {SELECTION} from '../../mutations-types'
-import CST from '../../../utils/CST'
+import CST from '../../../core/utils/CST'
 
 module.exports =
 {

@@ -309,8 +309,12 @@ export default
             this.screenshot.height = this.canvas.height;
 
             this.engine.runRenderLoop(_ => {
-                if(this.currentScene && this.engine)
+                if(this.currentScene && this.engine) {
+                    //Todo: optimize this, too much calls, fix for avoid bug when resize panels handlers.
+                    this.engine.resize();
+
                     this.currentScene.renderLoop();
+                }
             });
         })
     },

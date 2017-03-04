@@ -19,8 +19,8 @@ import path    from 'path'
 import Display from './display.vue'
 import Options from './options.vue'
 import Toolbar from './toolbar.vue'
-import Utility   from '../../../../../utils/Utility'
-import CST     from '../../../../../utils/CST'
+import Utility   from '../../../../../core/utils/Utility'
+import CST     from '../../../../../core/utils/CST'
 
 export default
 {

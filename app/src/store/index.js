@@ -7,7 +7,7 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Utility from '../utils/Utility'
+import Utility from '../core/utils/Utility'
 import HistoryPlugin from './plugins/history'
 Vue.use(Vuex);
 
