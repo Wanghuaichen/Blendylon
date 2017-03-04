@@ -8,6 +8,18 @@ export default class Keyboard
 {
 	constructor()
 	{
+		this.ctrl = false;
+		this.shift = false;
 
+
+		window.addEventListener('keydown', (e) => {
+			this.ctrl = e.ctrlKey;
+			this.shift = e.shiftKey;
+		});
+
+		window.addEventListener('keyup', (e) => {
+			this.ctrl = e.ctrlKey;
+			this.shift = e.shiftKey;
+		})
 	}
 }
