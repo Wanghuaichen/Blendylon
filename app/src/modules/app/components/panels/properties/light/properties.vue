@@ -22,8 +22,8 @@
 </template>
 <script>
     import {mapGetters, mapActions} from 'vuex'
-    import InputText from '../../../core/fields/text.vue'
-    import InputCheckbox from '../../../core/fields/checkbox.vue'
+    import InputText from '../../../../../../core/fields/text.vue'
+    import InputCheckbox from '../../../../../../core/fields/checkbox.vue'
 
     import Transform from './properties/transform.vue';
     import Relations from './properties/relations.vue';

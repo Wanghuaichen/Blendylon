@@ -22,7 +22,7 @@
     </div>
 </template>
 <script>
-import InputCheckbox from '../../../../core/fields/checkbox.vue'
+import InputCheckbox from '../../../../../../../core/fields/checkbox.vue'
 export default {
     props: {
         object : Object,

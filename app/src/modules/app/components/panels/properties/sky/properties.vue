@@ -292,8 +292,8 @@
 </template>
 <script>
 import {Chrome} from 'vue-color'
-import CST from '../../../../../../utils/CST'
-import Utility from '../../../../../../utils/Utility'
+import CST from '../../../../../../core/utils/CST'
+import Utility from '../../../../../../core/utils/Utility'
 import {mapGetters, mapActions} from 'vuex'
 export default {
     data() {

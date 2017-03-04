@@ -8,7 +8,7 @@
 import shortid from 'shortid'
 import CST from '../../../utils/CST'
 import Utility from '../../../utils/Utility'
-import Input from '../../../modules/app/components/core/inputs/input';
+import Input from '../../../core/inputs/input';
 import
 {
     SCENES,
@@ -30,9 +30,44 @@ const Store =
         }
     },
     getters: {
-        getScenes         : state => state.scenes,
-        getCurrentSceneId : state => state.scenes[state.current].id,
-        getCurrentScene   : state => state.scenes[state.current]
+        getScenes          : state => state.scenes,
+        getCurrentSceneId  : state => {
+            if(typeof state.scenes[state.current] != 'undefined')
+                return state.scenes[state.current].id
+        },
+        getCurrentScene    : state => state.scenes[state.current],
+        getSceneStatistics : state => {
+            let scene = state.scenes[state.current];
+            if(typeof scene != 'undefined') {
+                let stats = {};
+                let internal = {
+                    vertices : 0,
+                    meshes   : 0,
+                    lights   : 0,
+                    cameras  : 0
+                }
+
+                scene.meshes.forEach(mesh => {
+                    if(mesh.type == CST.OBJECTS.VIEWPORT_MESH) {
+                        internal.vertices += mesh.getTotalVertices()
+                        internal.meshes++;
+                    }
+                })
+
+                scene.lights.forEach(light => light.type == CST.OBJECTS.VIEWPORT_LIGHT ? internal.lights++ : null);
+                scene.cameras.forEach(camera => camera.type == CST.OBJECTS.VIEWPORT_CAMERA ? internal.cameras++ : null);
+
+                stats.vertices  = scene.getTotalVertices() - internal.vertices;
+                stats.meshes    = scene.meshes.length - internal.meshes;
+                stats.lights    = scene.lights.length - internal.lights;
+                stats.cameras   = scene.cameras.length - internal.cameras;
+                stats.materials = scene.materials.length - 2 < 0 ? 0 : scene.materials.length - 2;
+                stats.textures  = scene.textures.length - 2;
+
+                return stats;
+            }
+            else return {}
+        }
     },
     actions: {
         setActiveCamera(store, camera) {
@@ -77,9 +112,9 @@ const Store =
                 radius: settings.cursor.radius
             });
 
-            var light = new BABYLON.HemisphericLight(
-                'Light_' + currentScene.id,
-                new BABYLON.Vector3(-CST.HALFPI, 1, CST.HALFPI),
+            var light = new BABYLON.DirectionalLight(
+                'DirectionalLight',
+                new BABYLON.Vector3(-CST.HALFPI, -1, -CST.HALFPI),
                 currentScene
             );
             light.showName  = false;

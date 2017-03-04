@@ -38,8 +38,43 @@ module.exports =
                 name: 'Show quick menu / search',
                 description: 'Show the quick menu at mouse position',
                 state: CST.STATES.EDITOR.ALWAYS,
-                keys: 'shift+a',
+                keys: 'space',
                 callback: 'showContextMenu'
+            },
+            {
+                name: 'Reset current cursor',
+                description: 'Reset the current cursor position',
+                state: CST.STATES.EDITOR.HOVER,
+                keys: 'shift+c',
+                callback: 'resetCurrentCursor'
+            },
+            {
+                name: 'Clear selection',
+                description: 'Clear the current selection',
+                state: CST.STATES.EDITOR.HOVER,
+                keys: 'a',
+                callback: 'clearSelection'
+            },
+            {
+                name: 'Delete selection',
+                description: 'Delete the current objects selected',
+                state: CST.STATES.EDITOR.HOVER,
+                keys: 'x',
+                callback: 'removeSelection'
+            },
+            {
+                name: 'Center view on selection',
+                description: 'Center the view on the current selection',
+                state: CST.STATES.EDITOR.HOVER,
+                keys: '.',
+                callback: 'centerViewOnSelection'
+            },
+            {
+                name: 'Toggle camera mode',
+                description: 'Toggle the current camera mode (Perspective / Orthographic)',
+                state: CST.STATES.EDITOR.HOVER,
+                keys: '5',
+                callback: 'setCameraMode'
             }
         ]
     },

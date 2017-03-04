@@ -9,6 +9,7 @@ module.exports = {
     DELETE              : 'DELETE_CAMERA',
     SWITCH              : 'SWITCH_CAMERA',
     ADD                 : 'ADD_CAMERA',
+    TOGGLE_MODE         : 'TOGGLE_MODE_CAMERA',
     SET_VIEWPORT_RADIUS : 'SET_VIEWPORT_RADIUS_CAMERA',
     SET_VIEWPORT_TARGET : 'SET_VIEWPORT_TARGET_CAMERA',
     ADD_VIEWPORT        : 'ADD_VIEWPORT_CAMERA'

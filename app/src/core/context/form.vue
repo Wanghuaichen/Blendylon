@@ -72,7 +72,7 @@
 <script>
 import Vue from 'vue'
 import path from 'path'
-import Utility from '../../../../../utils/Utility'
+import Utility from '../utils/Utility'
 import InputCheckbox from '../fields/checkbox.vue'
 export default
 {

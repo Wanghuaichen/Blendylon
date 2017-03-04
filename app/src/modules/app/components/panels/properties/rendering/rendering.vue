@@ -1,6 +1,6 @@
 <template>
     <div style="padding: 0" class="scrollable-y full-height">
-        <div class="ui two wide column full-height" style="padding: 15px;">
+        <div class="ui two wide column" style="padding: 15px;">
             <div class="ui inverted accordion">
                 <div class="title active accordion-header noselect">
                     <i class="dropdown icon"></i> Mobile Device Orientation
@@ -57,7 +57,7 @@
 import path from 'path'
 import cp from 'child_process'
 import Utility from '../../../../../../utils/Utility'
-import InputText from '../../../core/fields/text.vue'
+import InputText from '../../../../../../core/fields/text.vue'
 import {mapGetters, mapActions} from 'vuex'
 export default {
     data(){

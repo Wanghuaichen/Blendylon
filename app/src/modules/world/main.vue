@@ -148,8 +148,8 @@
 <script type="text/babel">
 let _ = require('lodash');
 
-import CST from '../../utils/CST.js';
-import Utility from '../../utils/Utility';
+import CST from '../../core/utils/CST.js';
+import Utility from '../../core/utils/Utility';
 
 //TODO: clean/build this entities system
 import EntitiesList from '../entities/list.vue'
@@ -157,10 +157,10 @@ import EntitiesList from '../entities/list.vue'
 import Selection from '../app/components/panels/viewport/modules/selection/selection';
 import Widgets from '../app/components/panels/viewport/modules/widgets/widgets'
 import Timeline from '../app/components/panels/timeline/timeline'
-import Context from '../app/components/core/context/context';
+import Context from '../../core/context/context';
 
-import ContextMenu from '../app/components/core/context/menu.vue';
-import ContextForm from '../app/components/core/context/form.vue';
+import ContextMenu from '../../core/context/menu.vue';
+import ContextForm from '../../core/context/form.vue';
 import Viewport from '../app/components/panels/viewport/viewport.vue';
 import Outliner from '../app/components/panels/outliner/outliner.vue';
 import RenderingProperties from '../app/components/panels/properties/rendering/rendering.vue';
@@ -288,7 +288,7 @@ export default
             }));
 
             this.listenShortcuts();
-
+            this.handleViewportClick();
 
             window.addEventListener('mousedown', this.hideContextMenu);
 
@@ -308,20 +308,9 @@ export default
             this.screenshot.width = this.canvas.width;
             this.screenshot.height = this.canvas.height;
 
-            this.engine.runRenderLoop(_ =>
-            {
-                if(this.currentScene && this.engine) {
-                    this.fps = ~~this.engine.getFps();
-                    this.engine.resize();
-                    this.stats.vertices  = this.currentScene.getTotalVertices() - 10;
-                    this.stats.meshes    = this.currentScene.meshes.length - 1;
-                    this.stats.lights    = this.currentScene.lights.length;
-                    this.stats.cameras   = this.currentScene.cameras.length - 1;
-                    this.stats.materials = this.currentScene.materials.length - 2 < 0 ? 0 : this.currentScene.materials.length - 2;
-                    this.stats.textures  = this.currentScene.textures.length - 2;
-
+            this.engine.runRenderLoop(_ => {
+                if(this.currentScene && this.engine)
                     this.currentScene.renderLoop();
-                }
             });
         })
     },
@@ -355,6 +344,7 @@ export default
             createInputs          : 'createInputs',
             addScene              : 'addScene',
 
+            toggleCameraMode      : 'toggleCameraMode',
             setViewportCameraRadius: 'setViewportCameraRadius',
             setViewportCameraTarget: 'setViewportCameraTarget',
 
@@ -379,50 +369,17 @@ export default
                     Mousetrap.bind(shortcut.keys, cb)
             })
         },
-        handleKeyDown(e)
-        {
-            let shift, ctrl;
-            //Todo: refactor to a shortcuts manager component
-
-            shift = !!window.event.shiftKey;
-            ctrl = !!window.event.ctrlKey;
-
-
-            // Mouse over viewport state
-            if(this.inputs.mouse.isHover['viewport'])
-            {
-                this.handleViewportClick();
-
-                // T - Toggle Tools Panel
-                if (e.keyCode == 84)
-                    this.toggleViewportTools();
-
-                // N - Toggle Viewport options
-                if(e.keyCode == 78)
-                    this.toggleViewportOptions();
-
-                // NUMPAD 5 - Switch viewport camera mode (Persp/Ortho)
-                if(e.keyCode == 101)
-                    this.camera.toggleMode();
-
-                // SHIT + C - Reset 3D cursor
-                if(shift && e.keyCode == 67)
-                    this.resetCurrentCursor()
-
-                // A - Clear Selection
-                if(!shift && !ctrl && e.keyCode == 65)
-                    this.selection.clear(this.currentScene);
-
-                // X - Delete selection
-                if(e.keyCode == 88)
-                    this.selection.remove();
-
-                // "." - Center view on selection
-                if(e.keyCode == 110)
-                    this.centerViewOnSelection();
-            }
+        setCameraMode() {
+            this.toggleCameraMode({sceneId: this.currentSceneId});
+        },
+        removeSelection() {
+            this.selection.remove();
+        },
+        clearSelection() {
+            this.selection.clear(this.currentScene);
         },
         closeContexts() {
+            console.log('ok')
             this.contextMenu.hide();
             this.contextForm.hide();
         },
@@ -438,9 +395,9 @@ export default
             this.currentScene.onPointerDown = (evt, pickResult) =>
             {
                 //TODO: create mutation/action
-//                        this.camera.setCurrentView('user');
+                //this.camera.setCurrentView('user');
 
-                if(ctrl)
+                if(this.inputs.keyboard.ctrl === true)
                 {
                     this.setCursorPosition({
                         sceneId: this.currentSceneId,
@@ -457,7 +414,7 @@ export default
 
                         if(object && !object.type.match(/viewport/))
                         {
-                            if(shift)
+                            if(this.inputs.keyboard.shift === true)
                                 this.selection.add(object, this.currentScene);
                             else
                                 this.selection.set(object, this.currentScene);

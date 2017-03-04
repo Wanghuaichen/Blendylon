@@ -28,7 +28,7 @@
     </transition>
 </template>
 <script>
-import Utility from '../../../../../utils/Utility'
+import Utility from '../utils/Utility'
 
 export default
 {

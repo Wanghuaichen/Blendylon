@@ -183,7 +183,7 @@
     </transition>
 </template>
 <script>
-import InputCheckbox from '../../core/fields/checkbox.vue'
+import InputCheckbox from '../../../../../core/fields/checkbox.vue'
 import {mapGetters, mapActions} from 'vuex'
 export default
 {

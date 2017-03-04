@@ -25,14 +25,15 @@
 <script src="app/libs/Babylon/babylon.lavaMaterial.js"></script>
 <script src="app/libs/SemanticUi/semantic.min.js"></script>
 <script src="app/libs/Mousetrap/Mousetrap.min.js"></script>
+<script src="app/libs/Mousetrap/Mousetrap.record.min.js"></script>
 <script src="./app/dist/build.js"></script>
 <script>
 window.refreshSemanticUi = () => {
   $(_=> {
     $('.ui.checkbox').checkbox();
     $('.ui.dropdown').dropdown({on: 'hover', delay : {
-      hide   : 200,
-      show   : 50,
+      hide   : 0,
+      show   : 10,
       search : 50,
       touch  : 50
     }});

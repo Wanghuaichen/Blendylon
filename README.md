@@ -4,4 +4,17 @@
 
 ## Build Setup
 
-Coming soon
+Install dependencies
+```
+npm install
+```
+
+Run development assets compilation
+```
+webpack --colors --progress --watch
+```
+
+Run the editor (dev mode)
+```
+npm run dev
+```

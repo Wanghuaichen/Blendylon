@@ -6,7 +6,8 @@
  * Written by Mel Florance <mel.florance@gmail.com>, 2017
  */
 
-import * as types from '../../mutations-types'
+import {LIGHTS} from '../../mutations-types'
+import api from '../../api/api'
 
 module.exports =
 {
@@ -17,9 +18,13 @@ module.exports =
         lights: state => state.lights
     },
     actions: {
-
+        addLight(store, payload) {
+            store.commit(LIGHTS.ADD, payload);
+        }
     },
     mutations: {
-
+        [LIGHTS.ADD](state, payload) {
+            api.lights.create()
+        }
     }
 }

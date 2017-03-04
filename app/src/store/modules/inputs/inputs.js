@@ -7,7 +7,7 @@
  */
 
 import {INPUTS} from '../../mutations-types'
-import Input from '../../../modules/app/components/core/inputs/input';
+import Input from '../../../core/inputs/input';
 
 const Store =
 {

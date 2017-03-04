@@ -45,6 +45,9 @@ const Store =
         addCamera(store, payload) {
             store.commit(CAMERAS.ADD, payload);
         },
+        toggleCameraMode(store, payload) {
+            store.commit(CAMERAS.TOGGLE_MODE, payload);
+        },
         setViewportCameraTarget(store, payload) {
             store.commit(CAMERAS.SET_VIEWPORT_TARGET, payload);
             store.commit(CURSORS.RESIZE, {
@@ -64,6 +67,14 @@ const Store =
         }
     },
     mutations: {
+        [CAMERAS.TOGGLE_MODE](state, payload) {
+            let index = getCameraIndex(payload.sceneId);
+            if (index >= 0) {
+                let camera = state.cameras[index];
+                camera.mode = camera.mode == 0 ? 1 : 0;
+                Vue.set(state.cameras, index, camera);
+            }
+        },
         [CAMERAS.SWITCH](state, sceneId) {
             let index = getCameraIndex(sceneId);
 

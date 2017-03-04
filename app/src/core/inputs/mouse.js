@@ -5,8 +5,8 @@
  * Written by Mel Florance <mel.florance@gmail.com>, 2016
  */
 
-import Event from '../../../../../core/events/Event'
-import Utils from '../../../../../utils/Utility';
+import Event from '../events/Event'
+import Utils from '../utils/Utility';
 
 export default class Mouse extends Event
 {

@@ -33,6 +33,9 @@ import quests   from '../quests/main.vue';
 import sounds   from '../sounds/main.vue';
 import players  from '../players/main.vue';
 
+
+
+
 var version = require('json!../../../../package.json').version;
 
 export default

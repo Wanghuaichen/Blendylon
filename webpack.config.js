@@ -32,7 +32,11 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: [/node_modules/, /bower_components/]
+        exclude: [/node_modules/, /bower_components/],
+        query: {
+          plugins: ['transform-runtime'],
+          presets: ["es2015", "stage-2"],
+        }
       },
       {
         test: /\.(png|jpg|gif|svg)$/,

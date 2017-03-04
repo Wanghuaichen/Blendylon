@@ -5,6 +5,5 @@
  * Written by Mel Florance <mel.florance@gmail.com>, 2017
  */
 
-module.exports = {
-
-}
+import Vue from 'vue'
+module.exports = new Vue();
