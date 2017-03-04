@@ -16,7 +16,7 @@ webpack --watch --progress --colors
 
 # start dev application env
 npm run dev
-```
+``` 
 
 ## Technologies used
 - [ElectronJS](https://electron.atom.io/)
