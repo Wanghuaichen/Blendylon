@@ -152,7 +152,7 @@
                     <div class="item" v-for="camera in actors.cameras" v-if="!camera.type.match(/viewport/)">
                         <div class="content">
                             <div class="header noselect">
-                                <i class="icon"><img src="app/src/assets/img/primitives/camera.png" class="light-icon"></i>
+                                <i class="icon"><img src="assets/img/primitives/camera.png" class="light-icon"></i>
                                 <span class="ui header noselect" v-bind:class="{orange : selection.name == camera.name}" @click="select(camera)">{{camera.name}}</span>
                                 <span style="float:right">
                                         <i class="eye icon"></i>
@@ -164,7 +164,7 @@
                     <div class="item" v-for="light in actors.lights" v-if="!light.type.match(/viewport/)">
                         <div class="content">
                             <div class="header noselect">
-                                <i class="icon"><img src="app/src/assets/img/primitives/light.png" class="light-icon"></i>
+                                <i class="icon"><img src="assets/img/primitives/light.png" class="light-icon"></i>
                                 <span class="ui header noselect" v-bind:class="{orange : selection !== {} && selection.name == light.name}" @click="select(light)">{{light.name}}</span>
                                 <span style="float:right">
                                         <i class="eye icon"></i>
@@ -176,7 +176,7 @@
                     <div class="item" v-for="object in currentScene.meshes" v-if="!object.type.match(/viewport/)">
                         <div class="content">
                             <div class="header text noselect">
-                                <i class="icon"><img src="app/src/assets/img/primitives/mesh.png" class="light-icon"></i>
+                                <i class="icon"><img src="assets/img/primitives/mesh.png" class="light-icon"></i>
                                 <span class="ui header noselect" v-bind:class="{orange : selection !== {} && selection.name == object.name}"  @click="select(object)">{{object.name}}</span>
                                 <span style="float:right">
                                         <i class="eye icon"></i>

@@ -3,7 +3,7 @@
         <div class="ui pointing menu inverted" id="main_menu">
             <div class="active blue item" data-tab="world"><i class="world icon"></i>World</div>
             <div class="blue item" data-tab="entities"><i class="tree icon"></i>Entities</div>
-            <div class="blue item" data-tab="items"><i class="icon"><img :src="'./app/src/assets/img/sword.png'" style="width:14px;"></i>Items</div>
+            <div class="blue item" data-tab="items"><i class="icon"><img :src="'assets/img/sword.png'" style="width:14px;"></i>Items</div>
             <div class="blue item" data-tab="quests"><i class="help icon"></i>Quests</div>
             <div class="blue item" data-tab="sounds"><i class="music icon"></i>Sounds</div>
             <div class="blue item" data-tab="players"><i class="users icon"></i>Players</div>

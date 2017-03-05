@@ -82,31 +82,31 @@
                         <div class="row">
                             <div class="ui tabular pointing secondary inverted menu" id="options_menu">
                                 <div class="horizontally fitted item active" data-tab="tab-name">
-                                    <i class="icon"><img src="app/src/assets/img/icons/rendering.png"></i>
+                                    <i class="icon"><img src="assets/img/icons/rendering.png"></i>
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name2">
-                                    <i class="icon"><img src="app/src/assets/img/icons/scene.png"></i>
+                                    <i class="icon"><img src="assets/img/icons/scene.png"></i>
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name3">
-                                    <i class="icon"><img src="app/src/assets/img/icons/world.png"></i>
+                                    <i class="icon"><img src="assets/img/icons/world.png"></i>
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name4">
-                                    <i class="icon"><img src="app/src/assets/img/icons/object.png"></i>
+                                    <i class="icon"><img src="assets/img/icons/object.png"></i>
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name9">
-                                    <i class="icon"><img src="app/src/assets/img/lights/directional.png"></i>
+                                    <i class="icon"><img src="assets/img/lights/directional.png"></i>
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name5">
-                                    <i class="icon"><img src="app/src/assets/img/icons/material.png"></i>
+                                    <i class="icon"><img src="assets/img/icons/material.png"></i>
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name8">
-                                    <i class="icon"><img src="app/src/assets/img/icons/texture.png"></i>
+                                    <i class="icon"><img src="assets/img/icons/texture.png"></i>
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name6">
-                                    <i class="icon"><img src="app/src/assets/img/icons/physics.png"></i>
+                                    <i class="icon"><img src="assets/img/icons/physics.png"></i>
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name7">
-                                    <i class="icon"><img src="app/src/assets/img/icons/particles.png"></i>
+                                    <i class="icon"><img src="assets/img/icons/particles.png"></i>
                                 </div>
                             </div>
                         </div>
@@ -316,6 +316,8 @@ export default
                     this.currentScene.renderLoop();
                 }
             });
+
+            $('body').on('contextmenu', '#viewport', function(e){ return false; });
         })
     },
     computed: mapGetters(

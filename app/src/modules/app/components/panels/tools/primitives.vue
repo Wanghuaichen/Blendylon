@@ -6,7 +6,7 @@
         </div>
         <div class="content active">
             <button class="ui mini fluid inverted labeled icon button" @click="create(item.name)" v-for="item in menu.children">
-                <i class="icon"><img :src="'app/src/assets/img/primitives/'+item.name+'.png'" class="primitive-icon"></i>
+                <i class="icon"><img :src="'assets/img/primitives/'+item.name+'.png'" class="primitive-icon"></i>
                 {{item.name | camelCaseToStr | capitalize}}
             </button>
         </div>
@@ -49,7 +49,7 @@ export default
     {
         createFromHeightmap()
         {
-            this.$parent.contextForm.setIcon('app/src/assets/img/primitives/heightmap.png');
+            this.$parent.contextForm.setIcon('assets/img/primitives/heightmap.png');
             this.$parent.contextForm.setTitle('Create ground from heightmap');
             this.$parent.contextForm.setOptions(CST.PRIMITIVES.heightmap);
             this.$parent.contextForm.switch(true);
@@ -105,7 +105,7 @@ export default
                 this.createFromHeightmap();
             else
             {
-                this.$parent.contextForm.setIcon('app/src/assets/img/primitives/'+type+'.png');
+                this.$parent.contextForm.setIcon('assets/img/primitives/'+type+'.png');
                 this.$parent.contextForm.setTitle('Create ' + type);
                 this.$parent.contextForm.setOptions(CST.PRIMITIVES[type]);
                 this.$parent.contextForm.switch(true);

@@ -19,7 +19,7 @@ export default class Light
         this.ratio         = 0.04;
         this.spriteManager = new BABYLON.SpriteManager(
             'light_manager',
-            './app/src/assets/img/light.png',
+            'assets/img/light.png',
             1,
             this.size,
             this.scene

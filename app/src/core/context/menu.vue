@@ -66,8 +66,8 @@ export default
                 this.$parent.closeContexts()
             }
         },
-        findIconPath: (dir, icon) => './app/src/assets/img/'+dir+'/'+icon+'.png',
-        getIconCategory: (category) => './app/src/assets/img/menus/'+category+'.png',
+        findIconPath: (dir, icon) => 'assets/img/'+dir+'/'+icon+'.png',
+        getIconCategory: (category) => 'assets/img/menus/'+category+'.png',
         trigger(category, option)
         {
             let

@@ -79,7 +79,7 @@ const Store =
             name    = 'Cursor_' + payload.scene.id,
             manager = new BABYLON.SpriteManager(
                 'manager_'+name,
-                './app/src/assets/img/cursor.png',
+                'assets/img/cursor.png',
                 1,
                 state.defaults.size,
                 payload.scene

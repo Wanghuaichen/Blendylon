@@ -19,7 +19,7 @@ const Store =
             size: 100,
             applyFog: false,
             rotation: new BABYLON.Vector3(-CST.HALFPI, 0, 0),
-            diffuseTexture: './app/src/assets/img/grid.png',
+            diffuseTexture: 'assets/img/grid.png',
             specularColor: new BABYLON.Color3.Black(),
             emissiveColor: new BABYLON.Color3(0.65, .65, .65),
             disableLighting: true,
