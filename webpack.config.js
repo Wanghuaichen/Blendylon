@@ -9,7 +9,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  target: "web",
+  target: "electron",
   entry: './app/src/main.js',
   plugins: [
     new webpack.DefinePlugin({

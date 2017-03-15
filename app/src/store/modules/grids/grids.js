@@ -71,6 +71,7 @@ const Store =
             grid.applyFog = state.defaults.applyFog;
             grid.rotation = state.defaults.rotation.clone();
             grid.convertToFlatShadedMesh();
+            grid.freezeWorldMatrix();
             grid.material = new BABYLON.StandardMaterial(
                 'material_' + name,
                 payload.scene

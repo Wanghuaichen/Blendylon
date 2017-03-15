@@ -68,7 +68,7 @@ const Store =
     },
     mutations: {
         [CAMERAS.TOGGLE_MODE](state, payload) {
-            let index = getCameraIndex(payload.sceneId);
+            let index = getViewportCameraIndex(payload.sceneId);
             if (index >= 0) {
                 let camera = state.cameras[index];
                 camera.mode = camera.mode == 0 ? 1 : 0;
@@ -76,7 +76,7 @@ const Store =
             }
         },
         [CAMERAS.SWITCH](state, sceneId) {
-            let index = getCameraIndex(sceneId);
+            let index = getViewportCameraIndex(sceneId);
 
             if(index >= 0) {
                 state.current = index;
@@ -84,7 +84,7 @@ const Store =
             }
         },
         [CAMERAS.DELETE](state, payload) {
-            let index = getCameraIndex(payload.sceneId);
+            let index = getViewportCameraIndex(payload.sceneId);
             if (index >= 0) {
                 let camera = state.cameras[index];
 
@@ -99,7 +99,7 @@ const Store =
 
         },
         [CAMERAS.SET_VIEWPORT_RADIUS](state, payload) {
-            let index = getCameraIndex(payload.sceneId);
+            let index = getViewportCameraIndex(payload.sceneId);
             if (index >= 0) {
                 let camera = state.cameras[index];
                 camera.radius = payload.radius;
@@ -107,7 +107,7 @@ const Store =
             }
         },
         [CAMERAS.SET_VIEWPORT_TARGET](state, payload) {
-            let index = getCameraIndex(payload.sceneId);
+            let index = getViewportCameraIndex(payload.sceneId);
             if (index >= 0) {
                 let camera = state.cameras[index];
 
@@ -162,7 +162,7 @@ const getLastIndex = () => {
     else return 0
 }
 
-const getCameraIndex = (sceneId) => {
+const getViewportCameraIndex = (sceneId) => {
     return Store.state.cameras.findIndex(camera => {
         return camera.sceneId == sceneId
     });

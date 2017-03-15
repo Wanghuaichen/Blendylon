@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <link rel="stylesheet" href="app/dist/libs/SemanticUi/semantic.min.css"/>
-  <link rel="stylesheet" href="./app/src/assets/css/main.css"/>
+  <link rel="stylesheet" href="assets/css/main.css"/>
 </head>
 <body>
 <div id="app" class="full-height noselect"></div>
@@ -32,8 +32,8 @@ window.refreshSemanticUi = () => {
   $(_=> {
     $('.ui.checkbox').checkbox();
     $('.ui.dropdown').dropdown({on: 'hover', delay : {
-      hide   : 0,
-      show   : 10,
+      hide   : 10,
+      show   : 50,
       search : 50,
       touch  : 50
     }});

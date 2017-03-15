@@ -5,7 +5,7 @@
  * Written by Mel Florance <mel.florance@gmail.com>, 2017
  */
 
-const Lights = {
+module.exports = {
     create(payload)
     {
         let zero = new BABYLON.Vector3.Zero();

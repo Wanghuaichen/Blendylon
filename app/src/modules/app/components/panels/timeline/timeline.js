@@ -12,18 +12,20 @@ Timeline = (function() {
       height: window.innerHeight
     };
     this.canvas = window.document.getElementById('timeline');
-    this.ctx = this.canvas.getContext('2d');
-    $((function(_this) {
-      return function() {
-        _this.canvas.width = $('#entities_list').width();
-        _this.canvas.height = $('#entities_list').height();
-        _this.graph = new Graph();
-        _this.cursor = new Cursor();
-        _this.graph.draw(_this.ctx);
-        _this.cursor.draw(_this.ctx);
-        return _this.listenEvents(_this.ctx, _this.graph, _this.cursor);
-      };
-    })(this));
+    if (this.canvas) {
+      this.ctx = this.canvas.getContext('2d');
+      $((function(_this) {
+        return function() {
+          _this.canvas.width = $('#entities_list').width();
+          _this.canvas.height = $('#entities_list').height();
+          _this.graph = new Graph();
+          _this.cursor = new Cursor();
+          _this.graph.draw(_this.ctx);
+          _this.cursor.draw(_this.ctx);
+          return _this.listenEvents(_this.ctx, _this.graph, _this.cursor);
+        };
+      })(this));
+    }
   }
 
   Timeline.prototype.listenEvents = function(ctx, graph, cursor) {

@@ -27,7 +27,7 @@
 
 <script>
 import world    from '../world/main.vue';
-import entities from '../entities/main.vue';
+import entities from './components/panels/entities/main.vue';
 import items    from '../items/main.vue';
 import quests   from '../quests/main.vue';
 import sounds   from '../sounds/main.vue';

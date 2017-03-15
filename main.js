@@ -15,6 +15,7 @@ let createWindow = _ =>
     });
 
     win.loadURL(`file://${__dirname}/index.html`);
+    win.maximize();
 
     if(process.env.ELECTRON_ENV == 'development') {
         win.webContents.openDevTools();

@@ -75,7 +75,7 @@
 </template>
 <script type="text/babel">
 import path from 'path'
-//const {dialog} = require('electron').remote;
+const {dialog} = require('electron').remote;
 export default {
     name: 'Texture',
     data(){
@@ -134,27 +134,27 @@ export default {
         },
         addTexture() {
             $('#add_texture').blur()
-//            dialog.showOpenDialog(
-//            {
-//                properties: ['openFile'],
-//                filters: [
-//                    {name: 'Images', extensions: ['jpg', 'png', 'gif']},
-//                    {name: 'All Files', extensions: ['*']}
-//                ]
-//            },
-//            file =>
-//            {
-//                if(typeof file != 'undefined')
-//                {
-//                    let texture = new BABYLON.Texture(file[0], this.scene);
-//                    let index = this.textures.push({
-//                        name: path.basename(texture.name),
-//                        data: texture
-//                    });
-//
-//                    this.setCurrent(index - 1);
-//                }
-//            })
+            dialog.showOpenDialog(
+            {
+                properties: ['openFile'],
+                filters: [
+                    {name: 'Images', extensions: ['jpg', 'png', 'gif']},
+                    {name: 'All Files', extensions: ['*']}
+                ]
+            },
+            file =>
+            {
+                if(typeof file != 'undefined')
+                {
+                    let texture = new BABYLON.Texture(file[0], this.scene);
+                    let index = this.textures.push({
+                        name: path.basename(texture.name),
+                        data: texture
+                    });
+
+                    this.setCurrent(index - 1);
+                }
+            })
         }
     },
     props: {

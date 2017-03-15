@@ -400,6 +400,7 @@ export default{
         },
         setBumpTexture(texture) {
             this.object.material.bumpTexture = texture.data;
+            console.log(this.object.material)
             this.bumpName = path.basename(texture.data.url);
             this.hasBump = true
         },

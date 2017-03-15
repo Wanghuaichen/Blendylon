@@ -9,7 +9,7 @@
                 {{camera.mode == 1 ? 'Orthographic' : 'Perspective'}}
             </span>
         </div>
-        <div class="current-selection noselect" v-if="selection">{{selection.name}}</div>
+        <div class="current-selection noselect" v-if="selection.selected">{{selection.selected.name}}</div>
     </div>
 </template>
 <script>

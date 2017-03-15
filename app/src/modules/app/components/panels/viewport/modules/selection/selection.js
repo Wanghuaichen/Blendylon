@@ -30,8 +30,8 @@ export default class Selection
         {
             if(this.selected.type == CST.OBJECTS.LIGHT
             && typeof this.selected.widget != 'undefined')
-                if(typeof this.selected.widget.destroy == 'function')
-                    this.selected.widget.destroy();
+                if(typeof this.selected.widget.dispose == 'function')
+                    this.selected.widget.dispose();
 
             if(this.selected.material)
                 this.selected.material.dispose();

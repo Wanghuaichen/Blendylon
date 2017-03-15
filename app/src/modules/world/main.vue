@@ -49,6 +49,7 @@
                             ref="viewport"
                             :engine="engine"
                             :fps="fps"
+                            :selection="selection"
                             :camera="camera"
                             :scene="scene">
                         </viewport>
@@ -58,7 +59,24 @@
                         v-ui-drag-handler.horizontal="{'ui-viewport': 'ui-tools'}">
                     </div>
                     <div id="ui-tools">
-                        <entities-list></entities-list>
+                        <div class="full-height">
+                            <div class="ui four cards full-height" style="width: 100%;height:calc(100% - 39px);margin:0;">
+                                <div class="ui vertical icon menu inverted full-height" style="border-right: 1px solid rgba(255,255,255,0.1)">
+                                    <a class="item active">
+                                        <i class="cubes icon"></i>
+                                    </a>
+                                    <a class="item">
+                                        <i class="clock icon"></i>
+                                    </a>
+                                    <a class="item">
+                                        <i class="terminal icon"></i>
+                                    </a>
+                                </div>
+
+                                <timeline></timeline>
+                                <!--<entities-list></entities-list>-->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,6 +97,15 @@
                         v-ui-drag-handler.horizontal="{'ui-outliner': 'ui-properties'}">
                     </div>
                     <div id="ui-properties" class="full-height">
+                        <div class="ui tiny menu inverted" id="properties_toolba" style="border-bottom: 1px solid rgba(255,255,255,0.1);border-top: 1px solid rgba(255,255,255,0.1);margin-top: 0;margin-bottom: -3px;">
+                            <div class="item" style="border:none">
+                                <i class="wrench icon"></i>
+                                Properties
+                            </div>
+                            <div class="right menu">
+
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="ui tabular pointing secondary inverted menu" id="options_menu">
                                 <div class="horizontally fitted item active" data-tab="tab-name">
@@ -95,6 +122,9 @@
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name9">
                                     <i class="icon"><img src="assets/img/lights/directional.png"></i>
+                                </div>
+                                <div class="horizontally fitted item" data-tab="tab-name10">
+                                    <i class="icon"><img src="assets/img/cameras/Free.png"></i>
                                 </div>
                                 <div class="horizontally fitted item" data-tab="tab-name5">
                                     <i class="icon"><img src="assets/img/icons/material.png"></i>
@@ -125,10 +155,13 @@
                             </div>
                             <div class="ui transition fade in tab full-height" data-tab="tab-name9">
                                 <light-properties
-                                      :object="selection.selected"
-                                      :scene="scene"
-                                      :actors="actors">
+                                  :object="selection.selected"
+                                  :scene="scene"
+                                  :actors="actors">
                                 </light-properties>
+                            </div>
+                            <div class="ui transition fade in tab full-height" data-tab="tab-name10">
+                                <camera-properties></camera-properties>
                             </div>
                             <div class="ui transition fade in tab full-height" data-tab="tab-name5">
                                 <materials :scene="scene" :textures="textures" :object="selection.selected"></materials>
@@ -152,7 +185,8 @@ import CST from '../../core/utils/CST.js';
 import Utility from '../../core/utils/Utility';
 
 //TODO: clean/build this entities system
-import EntitiesList from '../entities/list.vue'
+import EntitiesList from '../app/components/panels/entities/list.vue'
+import TimelineView from '../app/components/panels/timeline/timeline.vue'
 
 import Selection from '../app/components/panels/viewport/modules/selection/selection';
 import Widgets from '../app/components/panels/viewport/modules/widgets/widgets'
@@ -167,6 +201,7 @@ import RenderingProperties from '../app/components/panels/properties/rendering/r
 import ObjectProperties from '../app/components/panels/properties/object/properties.vue';
 import LightProperties from '../app/components/panels/properties/light/properties.vue';
 import SkyProperties from '../app/components/panels/properties/sky/properties.vue';
+import CameraProperties from '../app/components/panels/properties/camera/properties.vue';
 import Textures from '../app/components/panels/properties/textures/textures.vue';
 import Materials from '../app/components/panels/properties/materials/materials.vue';
 import Scene from '../app/components/panels/properties/scene/scene.vue';
@@ -417,16 +452,18 @@ export default
                     if(pickResult.hit && typeof pickResult.pickedMesh.name !== 'undefined')
                     {
                         var object = this.currentScene.getMeshByName(pickResult.pickedMesh.name);
-
-                        if(object && !object.type.match(/viewport/))
+                        if(object)
                         {
-                            if(this.inputs.keyboard.shift === true)
-                                this.selection.add(object, this.currentScene);
-                            else
-                                this.selection.set(object, this.currentScene);
+                            if(!object.type.match(/viewport/))
+                            {
+                                if(this.inputs.keyboard.shift === true)
+                                    this.selection.add(object, this.currentScene);
+                                else
+                                    this.selection.set(object, this.currentScene);
 
-                            if(typeof this.$refs.viewport.$refs.viewport_display != 'undefined')
-                                this.$refs.viewport.$refs.viewport_display.resize();
+                                if(typeof this.$refs.viewport.$refs.viewport_display != 'undefined')
+                                    this.$refs.viewport.$refs.viewport_display.resize();
+                            }
                         }
                     }
                 }
@@ -499,22 +536,24 @@ export default
         }
     },
     components: {
-        'scene'             : Scene,
-        'viewport'          : Viewport,
-        'outliner'          : Outliner,
-        'textures'          : Textures,
-        'materials'         : Materials,
-        'entities-list'     : EntitiesList,
+        'scene'               : Scene,
+        'viewport'            : Viewport,
+        'outliner'            : Outliner,
+        'textures'            : Textures,
+        'materials'           : Materials,
+        'timeline'            : TimelineView,
+        'entities-list'       : EntitiesList,
         'rendering-properties': RenderingProperties,
-        'object-properties' : ObjectProperties,
-        'light-properties'  : LightProperties,
-        'sky-properties'    : SkyProperties,
-        'tools-primitives'  : ToolsPrimitives,
-        'tools-lights'      : ToolsLights,
-        'tools-cameras'     : ToolsCameras,
-        'tools-others'      : ToolsOthers,
-        'context-menu'      : ContextMenu,
-        'context-form'      : ContextForm
+        'camera-properties'   : CameraProperties,
+        'object-properties'   : ObjectProperties,
+        'light-properties'    : LightProperties,
+        'sky-properties'      : SkyProperties,
+        'tools-primitives'    : ToolsPrimitives,
+        'tools-lights'        : ToolsLights,
+        'tools-cameras'       : ToolsCameras,
+        'tools-others'        : ToolsOthers,
+        'context-menu'        : ContextMenu,
+        'context-form'        : ContextForm
     }
 }
 </script>

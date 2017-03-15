@@ -7,13 +7,16 @@
         @drop.prevent="drop($event, 'viewport_area')"
         @dragleave.prevent="leave($event, 'viewport_area')"
         >
-        <display></display>
+        <display :selection="selection"></display>
         <options ref="viewport_options"></options>
         <toolbar :camera="camera"></toolbar>
         <canvas id="viewport" class="noselect"></canvas>
     </div>
 </template>
 <script>
+
+
+
 import {mapGetters, mapActions} from 'vuex'
 import path    from 'path'
 import Display from './display.vue'
@@ -35,7 +38,8 @@ export default
         engine    : Object,
         fps       : Number,
         camera    : Object,
-        scene     : Object
+        scene     : Object,
+        selection : Object,
     },
     created()
     {

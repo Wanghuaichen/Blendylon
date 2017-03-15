@@ -20,19 +20,8 @@ import {mapGetters, mapActions} from 'vuex'
 
 export default {
     name:'tools_lights',
-    data() {
-        return {
-            increments: {}
-        }
-    },
-    props:
-    {
-        menu  : Object
-    },
-    created()
-    {
-        for(let light in CST.LIGHTS)
-            this.increments[light] = 0;
+    props: {
+        menu: Object
     },
     filters: {
         camelCaseToStr: str => Utility.camelCaseToStr(str),
@@ -42,102 +31,58 @@ export default {
         scene: 'getCurrentScene',
         camera: 'getCurrentCamera',
         cursor: 'getCurrentCursor',
-        cursorPosition: 'getCurrentCursorPosition'
+        cursorPosition: 'getCurrentCursorPosition',
+        lastLight: 'getLastLightCreated'
     }),
     methods:
     {
+        ...mapActions({
+            addLight: 'addLight',
+            addShadowGenerator: 'addShadowGenerator'
+        }),
         create(type)
         {
-            let light;
-            type = type.toLowerCase();
             this.$parent.contextForm.hide();
-            let cursorPosition = this.cursorPosition.clone();
-            let lightName = this.getName(type + 'Light');
 
-            switch(type)
-            {
-                case 'point':
-                    light = new BABYLON.PointLight(
-                        lightName,
-                        cursorPosition,
-                        this.scene
-                    );
-                break;
-                case 'directional':
-                    light = new BABYLON.DirectionalLight(
-                        lightName,
-                        cursorPosition,
-                        this.scene
-                    );
-                break;
-                case 'spot':
-                    light = new BABYLON.SpotLight(
-                        lightName,
-                        cursorPosition,
-                        new BABYLON.Vector3(0, -1, 0),
-                        0,
-                        1,
-                        this.scene
-                    );
-                break;
-                case 'hemispheric':
-                    light = new BABYLON.HemisphericLight(
-                        lightName,
-                        cursorPosition,
-                        this.scene
-                    )
-                break;
-            }
-
-            light.type = CST.OBJECTS.LIGHT;
-            light.model = type;
-
-            if(type == 'directional')
-                light.direction = new BABYLON.Vector3(0, 0, 0);
-
-            if(type != 'hemispheric')
-            {
-                light.widget = new Light(this.scene, this.camera, light);
-                light.widget.instance.position = light.position;
-
-                let generator = new BABYLON.ShadowGenerator(2048, light);
-                generator.usePoissonSampling = true;
-                generator.bias = 0.000001;
-
-                this.updateObjectsShadows(generator);
-            }
-
-            this.$parent.selection.set(light, this.scene);
-        },
-        updateObjectsShadows(generator)
-        {
-            this.scene.meshes.forEach((mesh) =>
-            {
-                if(mesh.receiveShadows === true)
-                {
-                    let renderList = generator.getShadowMap().renderList;
-                    let index = renderList.findIndex(object => {
-                        return object.name == mesh.name;
-                    });
-
-                    if(index == -1 && mesh.receiveShadows == true)
-                        renderList.push(mesh)
-                }
+            this.addLight({
+                type: type.toLowerCase(),
+                scene: this.scene,
+                position: this.cursorPosition.clone()
             });
-        },
-        getName(type)
-        {
-            let name = Utility.capitalize(type);
-            let exists = this.scene.getLightByName(name);
 
-            if(!exists)
-                return name;
-            else
-            {
-                this.increments[type]++;
-                return name + '.' + Utility.pad(this.increments[type], 3)
-            }
-        },
+            let action = new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickUpTrigger,
+                (clicked) => this.$parent.selection.set(clicked.source.light, this.scene));
+
+            this.lastLight.widget.actionManager = new BABYLON.ActionManager(this.scene);
+            this.lastLight.widget.actionManager.registerAction(action);
+
+            this.addShadowGenerator({
+                lightId: this.lastLight.id
+            })
+
+            this.$parent.selection.set(this.lastLight, this.scene);
+
+
+//            light.type = CST.OBJECTS.LIGHT;
+//            light.model = type;
+//
+//            if(type == 'directional')
+//                light.direction = new BABYLON.Vector3(0, 0, 0);
+//
+//            if(type != 'hemispheric')
+//            {
+//                light.widget = new Light(this.scene, this.camera, light);
+//                light.widget.instance.position = light.position;
+//
+//                let generator = new BABYLON.ShadowGenerator(2048, light);
+//                generator.usePoissonSampling = true;
+//                generator.bias = 0.000001;
+//
+//                this.updateObjectsShadows(generator);
+//            }
+//
+
+        }
     }
 }
 </script>

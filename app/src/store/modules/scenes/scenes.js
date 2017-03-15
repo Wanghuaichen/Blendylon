@@ -67,7 +67,7 @@ const Store =
                 return stats;
             }
             else return {}
-        }
+        },
     },
     actions: {
         setActiveCamera(store, camera) {
@@ -105,30 +105,36 @@ const Store =
                 settings[setting].init = true;
 
             store.commit(CAMERAS.ADD_VIEWPORT, settings.camera);
-            store.commit(GRIDS.ADD,      settings.grid);
-            store.commit(CURSORS.CREATE, settings.cursor);
+            store.commit(GRIDS.ADD,            settings.grid);
+            store.commit(CURSORS.CREATE,       settings.cursor);
             store.commit(CURSORS.RESIZE, {
                 sceneId: settings.cursor.scene.id,
                 radius: settings.cursor.radius
             });
-
-            var light = new BABYLON.DirectionalLight(
-                'DirectionalLight',
-                new BABYLON.Vector3(-CST.HALFPI, -1, -CST.HALFPI),
-                currentScene
-            );
-            light.showName  = false;
-            light.showAxis  = false;
-            light.intensity = .5;
-            light.type      = CST.OBJECTS.LIGHT
         },
         deleteScene(store, payload) {
             store.commit(GRIDS.DELETE,   payload);
             store.commit(CURSORS.DELETE, payload);
             store.commit(SCENES.DELETE,  payload);
+        },
+        updateObjectsShadows(store, payload) {
+            store.commit(SCENES.UPDATE_OBJECTS_SHADOWS, payload);
         }
     },
     mutations: {
+        [SCENES.UPDATE_OBJECTS_SHADOWS](state, payload) {
+            state.scenes[state.current].meshes.forEach(mesh =>
+            {
+                if(mesh.receiveShadows === true)
+                {
+                    let renderList = payload.generator.getShadowMap().renderList;
+                    let index = renderList.findIndex(object => object.name == mesh.name);
+
+                    if(index == -1 && mesh.receiveShadows == true)
+                        renderList.push(mesh)
+                }
+            });
+        },
         [SCENES.SET_ACTIVE_CAMERA](state, camera) {
             state.scenes[state.current].activeCamera = camera;
         },

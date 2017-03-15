@@ -7,17 +7,19 @@ class Timeline
 			width: window.innerWidth
 			height: window.innerHeight
 		@canvas = window.document.getElementById 'timeline'
-		@ctx = @canvas.getContext '2d'
-		$(() =>
-			@canvas.width = $('#entities_list').width()
-			@canvas.height = $('#entities_list').height()
 
-			@graph = new Graph()
-			@cursor = new Cursor()
-			@graph.draw @ctx
-			@cursor.draw @ctx
-			@listenEvents @ctx, @graph, @cursor
-		)
+		if @canvas
+			@ctx = @canvas.getContext '2d'
+			$(() =>
+				@canvas.width = $('#entities_list').width()
+				@canvas.height = $('#entities_list').height()
+
+				@graph = new Graph()
+				@cursor = new Cursor()
+				@graph.draw @ctx
+				@cursor.draw @ctx
+				@listenEvents @ctx, @graph, @cursor
+			)
 
 	listenEvents: (ctx, graph, cursor) ->
 		startX = 0
