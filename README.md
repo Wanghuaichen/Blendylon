@@ -2,6 +2,8 @@
 
 > A 3d Editor in javascript for BabylonJS
 
+Demo available on: [http://blendylon.crafting.fr](http://blendylon.crafting.fr/)
+
 ## Screenshot
 ![Overview](http://i.imgur.com/LcwBofl.png)
 
