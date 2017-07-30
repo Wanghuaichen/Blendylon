@@ -5,7 +5,7 @@
 Demo available on: [http://blendylon.crafting.fr](http://blendylon.crafting.fr/)
 
 ## Screenshot
-![Overview](http://i.imgur.com/LcwBofl.png)
+![Overview](https://media.discordapp.net/attachments/340866388467908608/341297767638892565/blendylon_screenshot.png)
 
 ## Build Setup
 
