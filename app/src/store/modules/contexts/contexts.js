@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) Fenx Systems, Inc - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -10,16 +9,12 @@ import {CONTEXTS} from '../../mutations-types'
 
 module.exports =
 {
-    state: {
-        contexts: []
+    state     : {
+        contexts : []
     },
-    getters: {
-        contexts: state => state.contexts
+    getters   : {
+        contexts : state => state.contexts
     },
-    actions: {
-
-    },
-    mutations: {
-
-    }
+    actions   : {},
+    mutations : {}
 }
