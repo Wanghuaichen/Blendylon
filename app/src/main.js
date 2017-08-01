@@ -8,7 +8,7 @@ import UiDragHandler from './core/directives/ui-drag-handler';
 
 Vue.use(Vuex);
 new Vue({
-    el: '#app',
-    store: store,
-    render: x => x(require('./modules/app/App.vue'))
+    el     : '#app',
+    store  : store,
+    render : x => x(require('./modules/app/App.vue'))
 });
