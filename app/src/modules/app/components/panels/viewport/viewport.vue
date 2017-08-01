@@ -1,65 +1,61 @@
 <template>
-    <div
-        ref="viewport_area"
-        class="drop-area noselect full-height"
-        id="viewport_container"
-        @dragover.prevent="over($event, 'viewport_area')"
-        @drop.prevent="drop($event, 'viewport_area')"
-        @dragleave.prevent="leave($event, 'viewport_area')"
+    <div class="full-width full-height">
+        <div
+                ref="viewport_area"
+                class="drop-area noselect full-height"
+                id="viewport_container"
+                @dragover.prevent="over($event, 'viewport_area')"
+                @drop.prevent="drop($event, 'viewport_area')"
+                @dragleave.prevent="leave($event, 'viewport_area')"
         >
-        <display :selection="selection"></display>
-        <options ref="viewport_options"></options>
-        <toolbar :camera="camera"></toolbar>
-        <canvas id="viewport" class="noselect"></canvas>
+            <display></display>
+            <options ref="viewport_options"></options>
+            <canvas id="viewport" class="noselect"></canvas>
+        </div>
+        <tools></tools>
     </div>
 </template>
 <script>
-
-
-
 import {mapGetters, mapActions} from 'vuex'
 import path    from 'path'
 import Display from './display.vue'
 import Options from './options.vue'
-import Toolbar from './toolbar.vue'
-import Utility   from '../../../../../core/utils/Utility'
+import Utility from '../../../../../core/utils/Utility'
 import CST     from '../../../../../core/utils/CST'
+
+import Tools from '../../panels/tools/tools.vue'
 
 export default
 {
-    name:'viewport',
+    props: {
+        model: Object
+    },
+    name       : 'viewport',
     data() {
         return {
-            increments: {}
+            increments : {}
         }
-    },
-    props:
-    {
-        engine    : Object,
-        fps       : Number,
-        camera    : Object,
-        scene     : Object,
-        selection : Object,
     },
     created()
     {
-        window.ondragover = window.ondrop = function(e) {e.preventDefault(); return false; };
+        window.ondragover = window.ondrop = function(e) {
+            e.preventDefault();
+            return false;
+        };
     },
-    computed: mapGetters({
-        currentScene: 'getCurrentScene',
-        cursor: 'getCurrentCursor'
+    computed   : mapGetters({
+        currentScene : 'getCurrentScene',
+        cursor       : 'getCurrentCursor'
     }),
-    methods:
-    {
+    methods    : {
         getName(type)
         {
-            let name = Utility.capitalize(type);
+            let name   = Utility.capitalize(type);
             let exists = this.scene.getMeshByName(name);
 
             if(!exists)
                 return name;
-            else
-            {
+            else {
                 this.increments[type]++;
                 return name + '.' + Utility.pad(this.increments[type], 3)
             }
@@ -68,33 +64,30 @@ export default
         {
             e.preventDefault();
 
-            for(var i = 0; i < e.dataTransfer.files.length; ++i)
-            {
+            for(var i = 0; i < e.dataTransfer.files.length; ++i) {
                 let file = e.dataTransfer.files[i];
 
                 BABYLON.SceneLoader.ImportMesh(
-                '',
-                path.dirname(file.path) + '/',
-                path.basename(file.path),
-                this.currentScene,
-                (meshes, particles, skeletons) =>
-                {
-                    if(meshes.length > 0)
-                    {
-                        meshes.forEach(mesh =>
-                        {
-                            if(typeof this.increments[mesh.name] == 'undefined')
-                                this.increments[mesh.name] = 0;
+                        '',
+                        path.dirname(file.path) + '/',
+                        path.basename(file.path),
+                        this.currentScene,
+                        (meshes, particles, skeletons) => {
+                            if(meshes.length > 0) {
+                                meshes.forEach(mesh => {
+                                    if(typeof this.increments[mesh.name] == 'undefined')
+                                        this.increments[mesh.name] = 0;
 
-                            mesh.type     = CST.OBJECTS.MESH;
-                            mesh.name     = this.getName(mesh.name);
-                            mesh.material = new BABYLON.StandardMaterial('standardMaterial_'+mesh.name, this.currentScene);
-                            mesh.position = this.cursor.position.clone();
-                        })
-                    }
-                    if(skeletons.length > 0)
-                        this.currentScene.beginAnimation(skeletons[0], 0, 250, true, 1);
-                });
+                                    mesh.type     = CST.OBJECTS.MESH;
+                                    mesh.name     = this.getName(mesh.name);
+                                    mesh.material = new BABYLON.StandardMaterial('standardMaterial_' + mesh.name, this.currentScene);
+                                    mesh.position = this.cursor.position.clone();
+                                })
+                            }
+
+                            if(skeletons.length > 0)
+                                this.currentScene.beginAnimation(skeletons[0], 0, 250, true, 1);
+                        });
             }
         },
         over(e, ref) {
@@ -104,11 +97,10 @@ export default
             e.preventDefault();
         },
     },
-    components:
-    {
-        'display': Display,
-        'options': Options,
-        'toolbar': Toolbar
+    components : {
+        'tools'   : Tools,
+        'display' : Display,
+        'options' : Options
     }
 }
 </script>
