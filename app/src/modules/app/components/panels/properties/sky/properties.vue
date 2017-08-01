@@ -1,83 +1,81 @@
 <template>
     <div style="padding: 0" class="scrollable-y full-height" v-if="scene">
-        <div style="padding: 15px">
-            <div class="ui inverted accordion">
-                <div class="title active accordion-header noselect">
-                    <i class="dropdown icon"></i> Colors
-                </div>
-                <div class="content active">
-                    <div class="ui inverted mini fluid labeled input input-transform right" style="overflow: inherit">
-                        <div class="ui black label fixed noselect" style="width: 50%">
-                            Clear
-                        </div>
-                        <div style="display:block; width: 100%; height: 30px;position: relative;float: left;" @click.stop.prevent="showPicker('clear')">
-                            <div
-                                    v-if="typeof scene.clearColor != 'undefined'"
-                                    style="position: absolute; top: 0; left: 0; bottom: 0; right: 0;"
-                                    :style="{background: scene.clearColor.toHexString()}">
-                            </div>
-                        </div>
-                        <div style="position: relative;float: left; clear: left;z-index: 999" class="picker_container" v-show="show.clear" @click.stop.prevent>
-                            <div class="colorPicker" style="position: absolute;top: 32px;right:0;">
-                                <chrome-picker v-model="colors.clear" @change-color="onClearColorChange" ></chrome-picker>
-                            </div>
+        <div class="ui inverted accordion">
+            <div class="title active accordion-header noselect">
+                <i class="dropdown icon"></i> Colors
+            </div>
+            <div class="content active">
+                <div class="ui inverted mini fluid labeled input input-transform right" style="overflow: inherit">
+                    <div class="ui black label fixed noselect" style="width: 50%">
+                        Clear
+                    </div>
+                    <div style="display:block; width: 100%; height: 30px;position: relative;float: left;" @click.stop.prevent="showPicker('clear')">
+                        <div
+                                v-if="typeof scene.clearColor != 'undefined'"
+                                style="position: absolute; top: 0; left: 0; bottom: 0; right: 0;"
+                                :style="{background: scene.clearColor.toHexString()}">
                         </div>
                     </div>
-                    <div class="ui inverted mini fluid labeled input input-transform right" style="overflow: inherit">
-                        <div class="ui black label fixed noselect" style="width: 50%">
-                            Ambient
-                        </div>
-                        <div style="display:block; width: 100%; height: 30px;position: relative;float: left;" @click.stop.prevent="showPicker('ambient')">
-                            <div
-                                    v-if="typeof scene.ambientColor != 'undefined'"
-                                    style="position: absolute; top: 0; left: 0; bottom: 0; right: 0;"
-                                    :style="{background: scene.ambientColor.toHexString()}">
-                            </div>
-                        </div>
-                        <div style="position: relative;float: left; clear: left;z-index: 999" class="picker_container" v-show="show.ambient" @click.stop.prevent>
-                            <div class="colorPicker" style="position: absolute;top: 32px;right:0;">
-                                <chrome-picker v-model="colors.ambient" @change-color="onAmbientColorChange" ></chrome-picker>
-                            </div>
+                    <div style="position: relative;float: left; clear: left;z-index: 999" class="picker_container" v-show="show.clear" @click.stop.prevent>
+                        <div class="colorPicker" style="position: absolute;top: 32px;right:0;">
+                            <chrome-picker v-model="colors.clear" @change-color="onClearColorChange" ></chrome-picker>
                         </div>
                     </div>
-                    <br>
                 </div>
-
+                <div class="ui inverted mini fluid labeled input input-transform right" style="overflow: inherit">
+                    <div class="ui black label fixed noselect" style="width: 50%">
+                        Ambient
+                    </div>
+                    <div style="display:block; width: 100%; height: 30px;position: relative;float: left;" @click.stop.prevent="showPicker('ambient')">
+                        <div
+                                v-if="typeof scene.ambientColor != 'undefined'"
+                                style="position: absolute; top: 0; left: 0; bottom: 0; right: 0;"
+                                :style="{background: scene.ambientColor.toHexString()}">
+                        </div>
+                    </div>
+                    <div style="position: relative;float: left; clear: left;z-index: 999" class="picker_container" v-show="show.ambient" @click.stop.prevent>
+                        <div class="colorPicker" style="position: absolute;top: 32px;right:0;">
+                            <chrome-picker v-model="colors.ambient" @change-color="onAmbientColorChange" ></chrome-picker>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+        </div>
 
-            <div class="ui inverted accordion">
-                <div class="title active accordion-header noselect">
-                    <i class="dropdown icon"></i> Fog
-                    <div class="inline right-checkbox field" @click.stop.prevent="toggleFog()">
-                        <div class="ui inverted checkbox" >
-                            <input type="checkbox" tabindex="0" class="hidden" :model="fogMode" title="Enable world sky">
-                        </div>
+
+        <div class="ui inverted accordion">
+            <div class="title active accordion-header noselect">
+                <i class="dropdown icon"></i> Fog
+                <div class="inline right-checkbox field" @click.stop.prevent="toggleFog()">
+                    <div class="ui inverted checkbox" >
+                        <input type="checkbox" tabindex="0" class="hidden" :model="fogMode" title="Enable world sky">
                     </div>
                 </div>
-                <div class="content active">
-                    <div class="ui inverted mini fluid labeled input input-transform right" style="overflow: inherit">
-                        <div class="ui black label fixed noselect" style="width: 50%">
-                            Color
-                        </div>
-                        <div style="display:block; width: 100%; height: 30px;position: relative;float: left;" @click.stop.prevent="showPicker('fog')">
-                            <div
+            </div>
+            <div class="content active">
+                <div class="ui inverted mini fluid labeled input input-transform right" style="overflow: inherit">
+                    <div class="ui black label fixed noselect" style="width: 50%">
+                        Color
+                    </div>
+                    <div style="display:block; width: 100%; height: 30px;position: relative;float: left;" @click.stop.prevent="showPicker('fog')">
+                        <div
                                 v-if="typeof scene.fogColor != 'undefined'"
                                 style="position: absolute; top: 0; left: 0; bottom: 0; right: 0;"
                                 :style="{background: scene.fogColor.toHexString()}">
-                            </div>
-                        </div>
-                        <div style="position: relative;float: left; clear: left;z-index: 999" class="picker_container" v-show="show.fog" @click.stop.prevent>
-                            <div class="colorPicker" style="position: absolute;top: 32px;right:0;">
-                                <chrome-picker v-model="colors.fog" @change-color="onFogColorChange" ></chrome-picker>
-                            </div>
                         </div>
                     </div>
-                    <div class="ui inverted mini right fluid labeled input input-transform">
-                        <div class="ui black label fixed noselect" style="width:50%">
-                            Density
+                    <div style="position: relative;float: left; clear: left;z-index: 999" class="picker_container" v-show="show.fog" @click.stop.prevent>
+                        <div class="colorPicker" style="position: absolute;top: 32px;right:0;">
+                            <chrome-picker v-model="colors.fog" @change-color="onFogColorChange" ></chrome-picker>
                         </div>
-                        <input
+                    </div>
+                </div>
+                <div class="ui inverted mini right fluid labeled input input-transform">
+                    <div class="ui black label fixed noselect" style="width:50%">
+                        Density
+                    </div>
+                    <input
                             :disabled="!fogMode"
                             type="number"
                             name="fogDensity"
@@ -90,202 +88,200 @@
                             @input="setFogDensity"
                             @mouseup="editing = false"
                             title="Set dog density">
-                    </div>
-                    <br>
                 </div>
             </div>
+        </div>
 
-            <div class="ui inverted accordion">
-                <div class="title active accordion-header noselect">
-                    <i class="dropdown icon"></i> Sky
-                    <div class="inline right-checkbox field" @click.stop.prevent="toggleSky()">
-                        <div class="ui inverted checkbox" >
-                            <input type="checkbox" tabindex="0" class="hidden" :model="enabled" title="Enable world sky">
-                        </div>
+        <div class="ui inverted accordion">
+            <div class="title active accordion-header noselect">
+                <i class="dropdown icon"></i> Sky
+                <div class="inline right-checkbox field" @click.stop.prevent="toggleSky()">
+                    <div class="ui inverted checkbox" >
+                        <input type="checkbox" tabindex="0" class="hidden" :model="enabled" title="Enable world sky">
                     </div>
                 </div>
-                <div class="content active">
-                    <form class="ui inverted form">
+            </div>
+            <div class="content active">
+                <form class="ui inverted form">
 
-                        <div class="ui inverted mini fluid labeled input input-transform checkbox" @click.stop.prevent="toggleAnimation()">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Animated
-                            </div>
-                            <span class="input-slider-text noselect" style="width: 68px"></span>
-                            <input type="checkbox" tabindex="0" class="hidden" :model="animated" title="Animate world sky" :disabled="!enabled">
+                    <div class="ui inverted mini fluid labeled input input-transform checkbox" @click.stop.prevent="toggleAnimation()">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Animated
                         </div>
+                        <span class="input-slider-text noselect" style="width: 68px"></span>
+                        <input type="checkbox" tabindex="0" class="hidden" :model="animated" title="Animate world sky" :disabled="!enabled">
+                    </div>
 
-                        <div class="ui inverted mini right fluid labeled input input-transform">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Speed
-                            </div>
-                            <input
-                                    :disabled="!enabled || !animated"
-                                    type="number"
-                                    name="animationSpeed"
-                                    class="input-draggable"
-                                    min="0"
-                                    step="0.00001"
-                                    v-input-draggable
-                                    v-model="animationSpeed"
-                                    @mousemove="setAnimationSpeed"
-                                    @input="setAnimationSpeed"
-                                    @mouseup="editing = false"
-                                    title="Set sky animation speed">
+                    <div class="ui inverted mini right fluid labeled input input-transform">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Speed
                         </div>
+                        <input
+                                :disabled="!enabled || !animated"
+                                type="number"
+                                name="animationSpeed"
+                                class="input-draggable"
+                                min="0"
+                                step="0.00001"
+                                v-input-draggable
+                                v-model="animationSpeed"
+                                @mousemove="setAnimationSpeed"
+                                @input="setAnimationSpeed"
+                                @mouseup="editing = false"
+                                title="Set sky animation speed">
+                    </div>
 
-                        <div class="ui inverted mini right fluid labeled input input-transform">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Turbidity
-                            </div>
-                            <input
-                                    :disabled="!enabled"
-                                    type="number"
-                                    name="turbidity"
-                                    class="input-draggable"
-                                    min="0"
-                                    step="0.01"
-                                    v-input-draggable
-                                    v-model="turbidity"
-                                    @mousemove="setTurbidity"
-                                    @input="setTurbidity"
-                                    @mouseup="editing = false"
-                                    title="Set sky turbidity">
+                    <div class="ui inverted mini right fluid labeled input input-transform">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Turbidity
                         </div>
+                        <input
+                                :disabled="!enabled"
+                                type="number"
+                                name="turbidity"
+                                class="input-draggable"
+                                min="0"
+                                step="0.01"
+                                v-input-draggable
+                                v-model="turbidity"
+                                @mousemove="setTurbidity"
+                                @input="setTurbidity"
+                                @mouseup="editing = false"
+                                title="Set sky turbidity">
+                    </div>
 
-                        <div class="ui inverted mini right fluid labeled input input-transform">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Inclination
-                            </div>
-                            <input
-                                    :disabled="!enabled"
-                                    type="number"
-                                    name="inclination"
-                                    class="input-draggable"
-                                    step="0.001"
-                                    v-input-draggable
-                                    v-model="inclination"
-                                    @mousemove="setInclination"
-                                    @input="setInclination"
-                                    @mouseup="editing = false"
-                                    title="Set sky inclination">
+                    <div class="ui inverted mini right fluid labeled input input-transform">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Inclination
                         </div>
+                        <input
+                                :disabled="!enabled"
+                                type="number"
+                                name="inclination"
+                                class="input-draggable"
+                                step="0.001"
+                                v-input-draggable
+                                v-model="inclination"
+                                @mousemove="setInclination"
+                                @input="setInclination"
+                                @mouseup="editing = false"
+                                title="Set sky inclination">
+                    </div>
 
-                        <div class="ui inverted mini right fluid labeled input input-transform">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Azimuth
-                            </div>
-                            <input
-                                    :disabled="!enabled"
-                                    type="number"
-                                    name="azimuth"
-                                    class="input-draggable"
-                                    min="0"
-                                    step="0.001"
-                                    v-input-draggable
-                                    v-model="azimuth"
-                                    @mousemove="setAzimuth"
-                                    @input="setAzimuth"
-                                    @mouseup="editing = false"
-                                    title="Set sky azimuth">
+                    <div class="ui inverted mini right fluid labeled input input-transform">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Azimuth
                         </div>
+                        <input
+                                :disabled="!enabled"
+                                type="number"
+                                name="azimuth"
+                                class="input-draggable"
+                                min="0"
+                                step="0.001"
+                                v-input-draggable
+                                v-model="azimuth"
+                                @mousemove="setAzimuth"
+                                @input="setAzimuth"
+                                @mouseup="editing = false"
+                                title="Set sky azimuth">
+                    </div>
 
-                        <div class="ui inverted mini right fluid labeled input input-transform">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Luminance
-                            </div>
-                            <input
-                                    :disabled="!enabled"
-                                    type="number"
-                                    name="luminance"
-                                    class="input-draggable"
-                                    min="0"
-                                    step="0.01"
-                                    v-input-draggable
-                                    v-model="luminance"
-                                    @mousemove="setLuminance"
-                                    @input="setLuminance"
-                                    @mouseup="editing = false"
-                                    title="Set sky luminance">
+                    <div class="ui inverted mini right fluid labeled input input-transform">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Luminance
                         </div>
+                        <input
+                                :disabled="!enabled"
+                                type="number"
+                                name="luminance"
+                                class="input-draggable"
+                                min="0"
+                                step="0.01"
+                                v-input-draggable
+                                v-model="luminance"
+                                @mousemove="setLuminance"
+                                @input="setLuminance"
+                                @mouseup="editing = false"
+                                title="Set sky luminance">
+                    </div>
 
-                        <div class="ui inverted mini right fluid labeled input input-transform">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Rayleigh
-                            </div>
-                            <input
-                                    :disabled="!enabled"
-                                    type="number"
-                                    name="rayleigh"
-                                    class="input-draggable"
-                                    min="0"
-                                    step="0.01"
-                                    v-input-draggable
-                                    v-model="rayleigh"
-                                    @mousemove="setRayleigh"
-                                    @input="setRayleigh"
-                                    @mouseup="editing = false"
-                                    title="Set sky rayleigh">
+                    <div class="ui inverted mini right fluid labeled input input-transform">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Rayleigh
                         </div>
+                        <input
+                                :disabled="!enabled"
+                                type="number"
+                                name="rayleigh"
+                                class="input-draggable"
+                                min="0"
+                                step="0.01"
+                                v-input-draggable
+                                v-model="rayleigh"
+                                @mousemove="setRayleigh"
+                                @input="setRayleigh"
+                                @mouseup="editing = false"
+                                title="Set sky rayleigh">
+                    </div>
 
-                        <div class="ui inverted mini right fluid labeled input input-transform">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Distance
-                            </div>
-                            <input
-                                    :disabled="!enabled"
-                                    type="number"
-                                    name="distance"
-                                    class="input-draggable"
-                                    min="0"
-                                    step="0.01"
-                                    v-input-draggable
-                                    v-model="distance"
-                                    @mousemove="setDistance"
-                                    @input="setDistance"
-                                    @mouseup="editing = false"
-                                    title="Set sky distance">
+                    <div class="ui inverted mini right fluid labeled input input-transform">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Distance
                         </div>
+                        <input
+                                :disabled="!enabled"
+                                type="number"
+                                name="distance"
+                                class="input-draggable"
+                                min="0"
+                                step="0.01"
+                                v-input-draggable
+                                v-model="distance"
+                                @mousemove="setDistance"
+                                @input="setDistance"
+                                @mouseup="editing = false"
+                                title="Set sky distance">
+                    </div>
 
-                        <div class="ui inverted mini right fluid labeled input input-transform">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Mie coefficient
-                            </div>
-                            <input
-                                    :disabled="!enabled"
-                                    type="number"
-                                    name="mieCoefficient"
-                                    class="input-draggable"
-                                    min="0"
-                                    step="0.01"
-                                    v-input-draggable
-                                    v-model="mieCoefficient"
-                                    @mousemove="setMieCoefficient"
-                                    @input="setMieCoefficient"
-                                    @mouseup="editing = false"
-                                    title="Set sky mie coefficient">
+                    <div class="ui inverted mini right fluid labeled input input-transform">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Mie coefficient
                         </div>
+                        <input
+                                :disabled="!enabled"
+                                type="number"
+                                name="mieCoefficient"
+                                class="input-draggable"
+                                min="0"
+                                step="0.01"
+                                v-input-draggable
+                                v-model="mieCoefficient"
+                                @mousemove="setMieCoefficient"
+                                @input="setMieCoefficient"
+                                @mouseup="editing = false"
+                                title="Set sky mie coefficient">
+                    </div>
 
-                        <div class="ui inverted mini right fluid labeled input input-transform">
-                            <div class="ui black label fixed noselect" style="width:50%">
-                                Mie directional G
-                            </div>
-                            <input
-                                    :disabled="!enabled"
-                                    type="number"
-                                    name="mieDirectionalG"
-                                    class="input-draggable"
-                                    min="0"
-                                    step="0.01"
-                                    v-input-draggable
-                                    v-model="mieDirectionalG"
-                                    @mousemove="setMieDirectionalG"
-                                    @input="setMieDirectionalG"
-                                    @mouseup="editing = false"
-                                    title="Set sky mie directional G">
+                    <div class="ui inverted mini right fluid labeled input input-transform">
+                        <div class="ui black label fixed noselect" style="width:50%">
+                            Mie directional G
                         </div>
-                    </form>
-                </div>
+                        <input
+                                :disabled="!enabled"
+                                type="number"
+                                name="mieDirectionalG"
+                                class="input-draggable"
+                                min="0"
+                                step="0.01"
+                                v-input-draggable
+                                v-model="mieDirectionalG"
+                                @mousemove="setMieDirectionalG"
+                                @input="setMieDirectionalG"
+                                @mouseup="editing = false"
+                                title="Set sky mie directional G">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -430,7 +426,7 @@ export default {
         {
             this.skybox.material = new BABYLON.SkyMaterial('skybox', this.scene);
             this.skybox.material.backFaceCulling = false;
-            this.skybox.material._cachedDefines.FOG = false;
+//            this.skybox.material._cachedDefines.FOG = false;
             this.skybox.material.disableLighting = true;
             this.skybox.material.fogEnabled = false
             this.skybox.material.useSunPosition = false;
@@ -440,7 +436,7 @@ export default {
             this.skybox.material.azimuth = this.azimuth;
             this.skybox.material.luminance = this.luminance;
 
-            this.skybox.mesh = BABYLON.Mesh.CreateBox('skybox', 1500.0, this.scene);
+            this.skybox.mesh = BABYLON.Mesh.CreateBox('skybox', 1000.0, this.scene);
             this.skybox.mesh.type = CST.OBJECTS.VIEWPORT_MESH;
             this.skybox.mesh.infiniteDistance = true;
             this.skybox.mesh.material = this.skybox.material;
