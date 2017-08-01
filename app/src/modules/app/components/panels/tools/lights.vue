@@ -7,7 +7,7 @@
         <div class="content active">
             <button class="ui mini fluid inverted labeled icon button" @click="create(item.name)" v-for="item in menu.children">
                 <i class="icon"><img :src="'assets/img/primitives/'+item.name+'.png'" class="primitive-icon"></i>
-                {{item.name | camelCaseToStr | capitalize}}
+                <span class="text">{{item.name | camelCaseToStr | capitalize}}</span>
             </button>
         </div>
     </div>

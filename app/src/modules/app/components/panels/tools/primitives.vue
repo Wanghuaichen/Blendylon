@@ -7,7 +7,8 @@
         <div class="content active">
             <button class="ui mini fluid inverted labeled icon button" @click="create(item.name)" v-for="item in menu.children">
                 <i class="icon"><img :src="'assets/img/primitives/'+item.name+'.png'" class="primitive-icon"></i>
-                {{item.name | camelCaseToStr | capitalize}}
+                <span class="text">{{item.name | camelCaseToStr | capitalize}}</span>
+
             </button>
         </div>
     </div>
@@ -54,13 +55,16 @@ export default
             this.$parent.contextForm.setOptions(CST.PRIMITIVES.heightmap);
             this.$parent.contextForm.switch(true);
 
-            this.$parent.contextForm.on('submitted',  data =>
+            this.$parent.contextForm.on('submitted',  parent =>
             {
+                let data = parent.options;
                 let options = {};
+                parent.loading = false;
                 this.$parent.contextForm.hide();
                 this.$parent.selection.clear(this.currentScene);
-          ;
+
                 data.forEach(option => options[option.name] = option.value);
+
                 let heightmap = this.textures.find(t => t.name == options.texture);
                 let name = this.getName(options.name);
                 let ground = BABYLON.Mesh.CreateGroundFromHeightMap(

@@ -6,10 +6,12 @@
         </div>
         <div class="content active">
             <button class="ui mini fluid inverted labeled icon button">
-                <i class="icon"><img src="assets/img/icons/camera.png" class="primitive-icon"></i>Camera
+                <i class="icon"><img src="assets/img/icons/camera.png" class="primitive-icon"></i>
+                <span class="text">Camera</span>
             </button>
             <button class="ui mini fluid inverted labeled icon button">
-                <i class="icon"><img src="assets/img/icons/font.png" class="primitive-icon"></i>Text
+                <i class="icon"><img src="assets/img/icons/font.png" class="primitive-icon"></i>
+                <span class="text">Text</span>
             </button>
         </div>
     </div>

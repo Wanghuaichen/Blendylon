@@ -5,9 +5,10 @@
             Cameras
         </div>
         <div class="content active">
-            <button class="ui mini fluid inverted labeled icon button" @click="create(item.name)" v-for="item in menu.children">
+            <button class="ui mini fluid inverted labeled icon button" @click="create(item.name)"
+                    v-for="item in menu.children">
                 <i class="icon"><img :src="'assets/img/cameras/'+item.name+'.png'" class="primitive-icon"></i>
-                {{item.name | camelCaseToStr | capitalize}}
+                <span class="text">{{item.name | camelCaseToStr | capitalize}}</span>
             </button>
         </div>
     </div>
@@ -17,14 +18,13 @@
     import Utility from '../../../../../core/utils/Utility';
 
     export default {
-        name:'tools_cameras',
+        name    : 'tools_cameras',
         data() {
             return {
-                increments: {}
+                increments : {}
             }
         },
-        props:
-        {
+        props   : {
             scene : Object,
             menu  : Object
         },
@@ -33,32 +33,30 @@
             for(let light in CST.LIGHTS)
                 this.increments[light] = 0;
         },
-        filters: {
-            camelCaseToStr: str => Utility.camelCaseToStr(str),
-            capitalize: str => Utility.capitalize(str),
+        filters : {
+            camelCaseToStr : str => Utility.camelCaseToStr(str),
+            capitalize     : str => Utility.capitalize(str),
         },
-        methods:
-        {
+        methods : {
             create(type)
             {
                 let light;
                 type = type.toLowerCase();
                 this.$parent.contextForm.hide();
                 let cursorPosition = this.$parent.selection.cursor.instance.position.clone();
-                let lightName = this.getName(type + 'Light');
+                let lightName      = this.getName(type + 'Light');
 
 
                 this.$parent.selection.set(light);
             },
             getName(type)
             {
-                let name = Utility.capitalize(type);
+                let name   = Utility.capitalize(type);
                 let exists = this.$parent.scene.getLightByName(name);
 
                 if(!exists)
                     return name;
-                else
-                {
+                else {
                     this.increments[type]++;
                     return name + '.' + Utility.pad(this.increments[type], 3)
                 }
