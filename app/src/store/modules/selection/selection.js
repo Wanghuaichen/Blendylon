@@ -10,26 +10,24 @@ import CST from '../../../core/utils/CST'
 
 module.exports =
 {
-    state: {
-        selection: [],
-        options: {
-            width: 0.01,
-            color: '#f2711c'
+    state     : {
+        selection : [],
+        options   : {
+            width : 0.01,
+            color : '#f2711c'
         }
     },
-    getters:
-    {
+    getters   : {
         getSelection  : state => state.selection,
         firstSelected : state => state.selection[0],
         lastSelected  : state => state.selection[state.selection.length - 1]
     },
-    actions:
-    {
+    actions   : {
         setSelection(store, objects)
         {
-            if(!Array.isArray(objects))
+            if (!Array.isArray(objects))
                 objects = [objects];
-
+            
             store.commit(SELECTION.CLEAR);
             store.commit(SELECTION.STYLIZE, objects);
             store.commit(SELECTION.SET, objects);
@@ -48,12 +46,10 @@ module.exports =
             store.commit(SELECTION.REMOVE_FROM, objects);
         }
     },
-    mutations:
-    {
+    mutations : {
         [SELECTION.STYLIZE](state, objects)
         {
-            objects.forEach(object =>
-            {
+            objects.forEach(object => {
                 object.renderOutline = true;
                 object.outlineWidth  = state.options.width;
                 object.outlineColor  = new BABYLON.Color3.FromHexString(state.options.color);
@@ -70,22 +66,20 @@ module.exports =
         },
         [SELECTION.DELETE](state)
         {
-            state.selection.forEach(object =>
-            {
-                if(typeof object.dispose == 'function')
-                {
-                    if(object.type == CST.OBJECTS.LIGHT
-                    && typeof object.widget != 'undefined')
-                        if(typeof object.widget.destroy == 'function')
+            state.selection.forEach(object => {
+                if (typeof object.dispose == 'function') {
+                    if (object.type == CST.OBJECTS.LIGHT
+                        && typeof object.widget != 'undefined')
+                        if (typeof object.widget.destroy == 'function')
                             object.widget.destroy();
-
-                    if(object.material && object.material.dispose == 'function')
+                    
+                    if (object.material && object.material.dispose == 'function')
                         object.material.dispose();
-
+                    
                     object.dispose();
                 }
             });
-
+            
             this.selection = [];
         },
         [SELECTION.CLEAR](state, scene)
@@ -94,7 +88,7 @@ module.exports =
             scene.meshes.forEach(mesh => mesh.renderOutline = false);
         },
         [SELECTION.REMOVE_FROM](state, objects) {
-
+            
         }
     }
 }
