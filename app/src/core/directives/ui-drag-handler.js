@@ -9,104 +9,88 @@ import Vue from 'vue';
 
 const thresholdY = 83;
 const thresholdX = 90;
-const offset    = 34;
+const offset     = 34;
 
 Vue.directive('ui-drag-handler',
 {
-    bind: (el, binding) =>
-    {
-        let type = Object.keys(binding.modifiers)[0];
-        let a    = Object.keys(binding.value)[0];
-        let b    = binding.value[a];
-        let $a   = $('#' + a);
-        let $b   = $('#' + b);
-        let x    = $a.width();
-        let y    = $b.height();
+    bind: (el, binding) => {
 
-        window.addEventListener('resize', _ =>
-        {
-            if(type == 'vertical')
-                dragVertical(a, b, x, window.innerWidth)
-            else if(type == 'horizontal')
-                dragHorizontal(a, b, y,  window.innerHeight)
-        });
-
-        let toPercent = (a, b) => (a / b) * 100
-
-        let refreshTimeline = () => {
-            window.timeline.ctx.canvas.width = $('#entities_list').width();
-            window.timeline.ctx.canvas.height = $('#entities_list').height();
-            window.timeline.graph.draw(window.timeline.ctx);
-            window.timeline.cursor.draw(window.timeline.ctx);
-        }
-
-        let dragVertical = (a, b, x, screenWidth) =>
-        {
-            let aWidth   = Math.abs(screenWidth - x);
-            let bWidth   = Math.abs(screenWidth - aWidth);
-            let aPercent = toPercent(aWidth, screenWidth);
-            let bPercent = toPercent(bWidth, screenWidth);
-
-            if(bPercent < thresholdX && aPercent < thresholdX)
-            {
-                refreshTimeline();
-
-                $('#' + a).css('right', aPercent + '%');
-                $('#' + b).css('left', bPercent + '%');
-                $(el).css('left', 'calc('+ bPercent +'% - 2px)');
+        $(() => {
+            let type   = binding.value[0];
+            let a      = binding.value[1];
+            let b      = binding.value[2];
+            let parent = binding.value[3] || null;
+            let parentWidth = 0
+            let parentHeight = 0
+            let $a     = $('#' + a);
+            let $b     = $('#' + b);
+            let x      = $a.width();
+            let y      = $b.height();
+    
+            if(!parent) {
+                parentWidth = window.innerWidth
+                parentHeight = window.innerHeight
             }
-        }
-
-        let dragHorizontal = (a, b, y, screenHeight) =>
-        {
-            let aHeight   = Math.abs(screenHeight - y + offset);
-            let bHeight   = Math.abs(screenHeight - aHeight);
-            let bValue    = 'calc('+toPercent(bHeight, screenHeight) + '% - 2px)';
-            let aPercent  = toPercent(aHeight, screenHeight);
-            let bPercent  = toPercent(bHeight, screenHeight);
-
-            if($(el).hasClass('drag-handler-left-panel'))
-            {
-                if(bPercent < thresholdY && aPercent < thresholdY)
-                {
-                    bValue = 'calc('+bPercent + '% - 2px)';
-
-                    refreshTimeline();
-
-                    $('#' + a).css('bottom', 'calc('+aPercent + '% + 2px)');
-                    $('#' + b).css('top', bValue);
-
-                    $('#' + b).css('height', aPercent+'%');
-                    $(el).css('top', 'calc('+bPercent+'% - 2px)');
-                }
+            else {
+                parentWidth = $('#' + parent).width()
+                parentHeight = $('#' + parent).height()
             }
-            else
-            {
-                if(bPercent < thresholdY && aPercent < thresholdY)
-                {
-                    $('#' + a).css('bottom', 'calc('+aPercent + '% + 2px)');
-                    $('#' + b).css('top', bValue);
-
-                    $('#' + b).css('height', aPercent+'%');
-                    $(el).css('top', 'calc('+bPercent+'% - 2px)');
-                }
-            }
-        }
-
-        el.addEventListener('mousedown', _ =>
-        {
-            $(window).on('mousemove', event =>
-            {
-                x = event.clientX;
-                y = event.clientY;
-
+            
+            window.addEventListener('resize', _ => {
+                x = $a.width();
+                y = $b.height();
+                parentWidth = $('#' + parent).width()
+                parentHeight = $('#' + parent).height()
+                
                 if(type == 'vertical')
-                    dragVertical(a, b, x, window.innerWidth)
-                if(type == 'horizontal')
-                    dragHorizontal(a, b, y, window.innerHeight)
+                    dragVertical(a, b, x, parentWidth)
+                else if(type == 'horizontal')
+                    dragHorizontal(a, b, y, parentHeight)
             });
+    
+            let toPercent = (a, b) => (a / b) * 100
+            
+            let dragVertical = (a, b, x, pWidth) => {
+                let aWidth   = pWidth - x
+                let bWidth   = pWidth - aWidth
+                let aPercent = toPercent(aWidth, pWidth);
+                let bPercent = toPercent(bWidth, pWidth);
+                
+                $('#' + a).css('width', aPercent + '%');
+                $('#' + b).css('width', bPercent + '%');
+                
+                if(parent)
+                    el.style.left = bPercent + '%'
+                
+                window.resizeEvents.emit('drag_resize', 'vertical');
+            }
+    
+            let dragHorizontal = (a, b, y, pHeight) => {
+                let aHeight   = pHeight - y
+                let bHeight   = pHeight - aHeight
+                let aPercent  = toPercent(aHeight, pHeight);
+                let bPercent  = toPercent(bHeight, pHeight);
+    
 
-            $(document).on('mouseup', () => $(window).off('mousemove'))
-        });
+                $('#' + a).css('height', aPercent + '%');
+                $('#' + b).css('height', bPercent + '%');
+                window.resizeEvents.emit('drag_resize', 'horizontal');
+            }
+    
+            el.addEventListener('mousedown', _ => {
+                $(window).on('mousemove', event => {
+                    x = event.clientX;
+                    y = event.clientY;
+            
+                    if(type == 'vertical')
+                        dragVertical(a, b, x, parentWidth)
+                    if(type == 'horizontal')
+                        dragHorizontal(a, b, y, parentHeight)
+                });
+        
+                $(document).on('mouseup', () => $(window).off('mousemove'))
+            });
+        })
+        
     }
 });
