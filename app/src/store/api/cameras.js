@@ -9,15 +9,14 @@ const Cameras = {
     create(payload)
     {
         let zero = new BABYLON.Vector3.Zero();
-        switch (payload.type)
-        {
+        switch(payload.type) {
             case 'Free':
                 return new BABYLON.FreeCamera(
                     payload.name,
                     zero,
                     payload.scene
                 )
-            break;
+                break;
             case 'ArcRotate':
                 return new BABYLON.ArcRotateCamera(
                     payload.name,
@@ -27,42 +26,42 @@ const Cameras = {
                     payload.target || zero,
                     payload.scene
                 )
-            break
+                break
             case 'Touch':
                 return new BABYLON.TouchCamera(
                     payload.name,
                     payload.position || zero,
                     payload.scene
                 )
-            break;
+                break;
             case 'Gamepad':
                 return new BABYLON.GamepadCamera(
                     payload.name,
                     payload.position || zero,
                     payload.scene
                 )
-            break;
+                break;
             case 'DeviceOrientation':
                 return new BABYLON.DeviceOrientationCamera(
                     payload.name,
                     payload.position || zero,
                     payload.scene
                 )
-            break;
+                break;
             case 'Follow':
                 return new BABYLON.FollowCamera(
                     payload.name,
                     payload.position || zero,
                     payload.scene
                 )
-            break;
+                break;
             case 'VirtualJoysticks':
                 return new BABYLON.VirtualJoysticksCamera(
                     payload.name,
                     payload.position || zero,
                     payload.scene
                 )
-            break;
+                break;
             case 'AnaglyphArcRotate':
                 return new BABYLON.AnaglyphArcRotateCamera(
                     payload.name,
@@ -73,7 +72,7 @@ const Cameras = {
                     payload.eyeSpace || 0.033,
                     payload.scene
                 )
-            break;
+                break;
             case 'AnaglyphFree':
                 return new BABYLON.AnaglyphFreeCamera(
                     payload.name,
@@ -81,20 +80,20 @@ const Cameras = {
                     payload.eyeSpace || 0.033,
                     payload.scene
                 )
-            break;
+                break;
             case 'VRDeviceOrientationFree':
                 return new BABYLON.VRDeviceOrientationFreeCamera(
                     payload.name,
                     payload.scene
                 )
-            break;
+                break;
             case 'WebVRFree':
                 return new BABYLON.WebVRFreeCamera(
                     payload.name,
                     payload.position || zero,
                     payload.scene
                 )
-            break;
+                break;
         }
     }
 }
