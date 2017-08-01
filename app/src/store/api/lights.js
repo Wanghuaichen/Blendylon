@@ -9,9 +9,8 @@ module.exports = {
     create(payload)
     {
         let zero = new BABYLON.Vector3.Zero();
-
-        switch(payload.type)
-        {
+        
+        switch(payload.type) {
             case 'point':
                 return new BABYLON.PointLight(
                     payload.name,
