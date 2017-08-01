@@ -7,13 +7,13 @@
 
 export default
 {
-    toRadians: deg => deg * Math.PI / 180,
-    toDegrees: rad => rad * 180 / Math.PI,
-    lerp: (a, b, t) => a * (1 - t) + b * t,
-    clamp: (n, min, max) => n <= min ? min : n >= max ? max : n,
-    capitalize: s => s.replace(/\b\w/g, l => l.toUpperCase()),
-    camelCaseToStr: s => s.split(/(?=[A-Z])/).join(' '),
-    camelize: str => {
+    toRadians      : deg => deg * Math.PI / 180,
+    toDegrees      : rad => rad * 180 / Math.PI,
+    lerp           : (a, b, t) => a * (1 - t) + b * t,
+    clamp          : (n, min, max) => n <= min ? min : n >= max ? max : n,
+    capitalize     : s => s.replace(/\b\w/g, l => l.toUpperCase()),
+    camelCaseToStr : s => s.split(/(?=[A-Z])/).join(' '),
+    camelize       : str => {
         return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
             return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
         }).replace(/\s+/g, '');
