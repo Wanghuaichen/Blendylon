@@ -4,14 +4,20 @@
  * Proprietary and confidential
  * Written by Mel Florance <mel.florance@gmail.com>, 2016
  */
+var events = require('events');
 
 export default class Window
 {
-	constructor(engine)
-	{
-		window.addEventListener('resize', _ =>
-		{
-			engine.resize();
-		});
-	}
+    constructor(engine)
+    {
+        window.resizeEvents = new events.EventEmitter();
+        
+        window.resizeEvents.on('drag_resize', type => {
+            engine.resize();
+        });
+        
+        window.addEventListener('resize', _ => {
+            engine.resize();
+        });
+    }
 }
