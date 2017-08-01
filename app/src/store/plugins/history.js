@@ -9,7 +9,7 @@ module.exports = () => {
     return store => {
         store.subscribe((mutation, state) => {
             if(typeof mutation.payload != 'undefined') {
-                if (!mutation.payload.init) {
+                if(!mutation.payload.init) {
                     // console.log(state.Cursors.cursors)
                 }
             }
