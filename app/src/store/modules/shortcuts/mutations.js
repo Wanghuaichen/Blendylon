@@ -6,5 +6,5 @@
  */
 
 module.exports = {
-    SET_KEYS: 'SET_KEYS_SHORTCUTS'
+    SET_KEYS : 'SET_KEYS_SHORTCUTS'
 }
