@@ -1,25 +1,72 @@
 <template>
-    <div id="entities_list" style="width:calc(100% - 50px);position: relative;padding: 0;">
-        <div class="ui tiny menu inverted" style="border-bottom: 1px solid rgba(255,255,255,0.1);border-top: 1px solid rgba(255,255,255,0.1);margin-top: 2px;margin-bottom:0;border-right: 1px solid rgba(255, 255, 255, 0.0980392);height: 39px">
-            <div class="centered item">
-                <i class="download icon"></i>
-                Timeline controls
-            </div>
-            <div class="right menu">
-                <div class="item">
-
-                </div>
-            </div>
-        </div>
-        <div style="position:relative; width:100%;height: calc(100% - 42px);">
-            <canvas id="timeline" style="height: 100%; width: 100%;box-shadow: inset 0 0 20px black"></canvas>
+    <div id="entities_list" class="noselect" style="position: relative;padding: 0;height:100%">
+        <div style="position:relative; width:100%;height: 100%;">
+            <canvas :id="'timeline_'+model.id" style="height: 100%; width: 100%;" class="noselect"></canvas>
         </div>
     </div>
 </template>
 <script>
-export default{
-    data(){
-        return {}
+import Timeline from './timeline'
+import {mapGetters, mapActions} from 'vuex'
+
+export default {
+    props: {
+        model: Object
+    },
+    data() {
+        return {
+            time: 0,
+            playing: false,
+            timeline: {}
+        }
+    },
+    created() {
+        this.timeline = new Timeline('timeline_'+this.model.id);
+    },
+    computed: {
+        ...mapGetters({
+            coreOptions: 'getCoreOptions'
+        }),
+        getTime() {
+            var seconds = this.timeline.time % 60
+            var sign = seconds < 0 ? '-' : ''
+            var s = seconds.toFixed(2).toString().split('.')
+            var millis = Math.abs(s[1])
+            return sign + (seconds < 10 ? '0' : '') + Math.abs(s[0]) + '+' + millis + (millis < 10 ? '0' : '')
+        }
+    },
+    methods: {
+        ...mapActions({
+            setRenderingFrameRangeStart : 'setRenderingFrameRangeStart',
+            setRenderingFrameRangeEnd   : 'setRenderingFrameRangeEnd'
+        }),
+        updateRenderingFrameRangeStart() {
+            this.setRenderingFrameRangeStart({
+                start: parseFloat(window.$('input[name="rendering_frame_range_start"]').val())
+            })
+        },
+        updateRenderingFrameRangeEnd() {
+            this.setRenderingFrameRangeEnd({
+                end: parseFloat(window.$('input[name="rendering_frame_range_end"]').val())
+            })
+        },
+        updateTimelineTime() {
+            this.timeline.time = parseFloat(window.$('input[name="timeline_time"]').val())
+        },
+        play(reversed) {
+            this.playing = true
+            this.timeline.play(reversed)
+        },
+        pause() {
+            this.playing = false
+            this.timeline.pause()
+        },
+        goToStart() {
+            this.timeline.goToStart()
+        },
+        goToEnd() {
+            this.timeline.goToEnd()
+        }
     }
 }
 </script>
