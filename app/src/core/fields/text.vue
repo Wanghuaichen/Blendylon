@@ -17,20 +17,20 @@ export default
 {
     data() {
         return {
-            value: this.attr,
-            old: this.attr
+            value : this.attr,
+            old   : this.attr
         }
     },
-    watch: {
+    watch   : {
         attr(value) {
             this.value = this.old = value;
         }
     },
-    props: {
-        label: String,
-        attr: String
+    props   : {
+        label : String,
+        attr  : String
     },
-    methods: {
+    methods : {
         submit(event)
         {
             if(event.keyCode == 13) {
