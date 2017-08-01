@@ -9,13 +9,13 @@ import {HISTORY} from '../../mutations-types'
 
 module.exports =
 {
-    state: {
-        history: {}
+    state     : {
+        history : {}
     },
-    getters: {
-        history: state => state.history
+    getters   : {
+        history : state => state.history
     },
-    actions: {
+    actions   : {
         addAction(store, action) {
             store.commit(HISTORY.ADD_ACTION, action);
         },
@@ -23,7 +23,7 @@ module.exports =
             store.commit(HISTORY.UNDO_ACTION, action);
         }
     },
-    mutations: {
+    mutations : {
         [HISTORY.ADD_ACTION](state, action) {
             state.history.push(action);
         },
