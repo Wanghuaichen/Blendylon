@@ -2,27 +2,17 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Warlight Editor</title>
+  <title>Blendylon</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <link rel="stylesheet" href="app/dist/libs/SemanticUi/semantic.min.css"/>
   <link rel="stylesheet" href="assets/css/main.css"/>
+  <link rel="stylesheet" href="assets/css/ui/theme.css"/>
 </head>
 <body>
 <div id="app" class="full-height noselect"></div>
 <script>window.$ = window.jQuery = require('jquery')</script>
-<script src="app/dist/libs/Babylon/babylon.js"></script>
-<script src="app/dist/libs/Babylon/babylon.fireMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.furMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.gradientMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.gridMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.normalMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.simpleMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.triPlanarMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.terrainMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.waterMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.skyMaterial.js"></script>
-<script src="app/dist/libs/Babylon/babylon.lavaMaterial.js"></script>
+<script src="app/dist/libs/Babylon/babylon.custom.js"></script>
 <script src="app/dist/libs/SemanticUi/semantic.min.js"></script>
 <script src="app/dist/libs/Mousetrap/Mousetrap.min.js"></script>
 <script src="app/dist/libs/Mousetrap/Mousetrap.record.min.js"></script>
@@ -31,12 +21,7 @@
 window.refreshSemanticUi = () => {
   $(_=> {
     $('.ui.checkbox').checkbox();
-    $('.ui.dropdown').dropdown({on: 'hover', delay : {
-      hide   : 10,
-      show   : 50,
-      search : 50,
-      touch  : 50
-    }});
+    $('.ui.dropdown').dropdown();
     $('select.dropdown').dropdown();
     $('.ui.accordion').accordion({
       exclusive: false
