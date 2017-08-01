@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) Fenx Systems, Inc - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -10,15 +9,17 @@ import {OBJECTS} from '../../mutations-types'
 
 module.exports =
 {
-    state: {
-        objects: [{
-            test: 2
-        }]
+    state     : {
+        objects : [
+            {
+                test : 2
+            }
+        ]
     },
-    getters: {
-        objects: state => state.objects
+    getters   : {
+        objects : state => state.objects
     },
-    actions: {
+    actions   : {
         setObjects(store, objects) {
             store.commit(OBJECTS.SET, objects);
         },
@@ -26,7 +27,7 @@ module.exports =
             store.commit(OBJECTS.ADD, object);
         }
     },
-    mutations: {
+    mutations : {
         [OBJECTS.SET](state, objects) {
             state.objects = objects;
         },

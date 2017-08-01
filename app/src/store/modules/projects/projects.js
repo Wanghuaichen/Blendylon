@@ -10,10 +10,10 @@ import * as types from '../../mutations-types'
 module.exports =
 {
     state: {
-        projects: []
+        recents: []
     },
     getters: {
-        projects: state => state.projects
+        recents: state => state.recents
     },
     actions: {
 

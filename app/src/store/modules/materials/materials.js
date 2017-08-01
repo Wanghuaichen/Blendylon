@@ -1,4 +1,3 @@
-
 /*
  * Copyright (c) Fenx Systems, Inc - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
@@ -10,16 +9,12 @@ import * as types from '../../mutations-types'
 
 module.exports =
 {
-    state: {
-        materials: []
+    state     : {
+        materials : []
     },
-    getters: {
-        materials: state => state.materials
+    getters   : {
+        materials : state => state.materials
     },
-    actions: {
-
-    },
-    mutations: {
-
-    }
+    actions   : {},
+    mutations : {}
 }
