@@ -13,12 +13,12 @@ Vue.use(Vuex);
 
 let modules = {}
 require('json-loader!./modules.json').forEach(module => {
-    let name = Utility.capitalize(module);
+    let name      = Utility.capitalize(module);
     modules[name] = require('./modules/' + module + '/' + module);
 })
 
 export default new Vuex.Store({
-    modules: modules,
-    plugins: [HistoryPlugin()],
-    strict: false
+    modules : modules,
+    plugins : [HistoryPlugin()],
+    strict  : false
 });
