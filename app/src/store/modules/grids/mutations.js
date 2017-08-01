@@ -6,7 +6,10 @@
  */
 
 module.exports = {
-    SWITCH : 'SWITCH_GRID',
-    ADD    : 'ADD_GRID',
-    DELETE : 'DELETE_GRID'
+    SWITCH        : 'SWITCH_GRID',
+    ADD           : 'ADD_GRID',
+    DELETE        : 'DELETE_GRID',
+    SET_FREQUENCY : 'SET_FREQUENCY',
+    SET_RATIO     : 'SET_RATIO',
+    SET_OPACITY   : 'SET_OPACITY'
 }
