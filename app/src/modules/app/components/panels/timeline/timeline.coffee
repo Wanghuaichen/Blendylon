@@ -1,67 +1,128 @@
-Graph  = require './graph'
-Cursor = require './cursor'
+TimelineGui = require './timeline.gui'
+Animation = require './Animation'
+Easing = require './easing'
 
 class Timeline
-	constructor: ->
-		@defaults =
-			width: window.innerWidth
-			height: window.innerHeight
-		@canvas = window.document.getElementById 'timeline'
+	name       : 'Global'
+	animations : []
+	totalTime  : 0
+	loopCount  : 0
+	loopMode   : 0
+	interval   : 0
+	reversed   : false
+	playing    : false
+	fps        : 60
 
-		if @canvas
-			@ctx = @canvas.getContext '2d'
-			$(() =>
-				@canvas.width = $('#entities_list').width()
-				@canvas.height = $('#entities_list').height()
+	constructor : (container) ->
+		@time = 0
+		@gui = new TimelineGui container, this
+		@interval = setInterval =>
+			@update()
+			@gui.time = @time
+			@gui.update()
+		, 1000 / @fps
 
-				@graph = new Graph()
-				@cursor = new Cursor()
-				@graph.draw @ctx
-				@cursor.draw @ctx
-				@listenEvents @ctx, @graph, @cursor
-			)
+	play : (reversed = false) ->
+		@playing = true
+		@reversed = reversed
 
-	listenEvents: (ctx, graph, cursor) ->
-		startX = 0
-		startY = 0
-		onResize = ->
-			ctx.canvas.width  = @defaults.width
-			ctx.canvas.height = @defaults.height
-			graph.draw ctx
+	pause : ->
+		@playing = false
 
-		onMouseWheel = (e) ->
-			delta = Math.max -1, Math.min 1, e.wheelDelta or -e.detail
-			console.log delta
+	stop : ->
+		@playing = false
+		@time = 0
 
-		onMouseMoveGraph = (e) ->
-			graph.move e.clientX - startX, e.pageY - startY
-#			console.log graph.origin
-			graph.draw ctx
-			cursor.draw ctx, e.clientX - graph.origin.x - 50
+	goToStart : ->
+		@time = 0
 
-		onMouseMoveCursor = (e) ->
-			graph.draw ctx
-			cursor.draw ctx, e.clientX - 50
+	goToEnd : ->
+		@time = @findAnimationEnd()
 
-		onMouseDown = (e) ->
-			if e.which == 2
-				startX = e.clientX - graph.origin.x
-				startY = e.clientY - graph.origin.y
-				window.addEventListener 'mousemove', onMouseMoveGraph
+	findAnimationEnd : ->
+		endTime = 60
+		i = 0
+		while i < @animations.length
+			if @animations[i].endTime > endTime
+				endTime = @animations[i].endTime
+			i++
+		endTime
 
-			if e.which == 1
-				cursor.position.x = 0
-				graph.draw ctx
-				cursor.draw ctx, startX - 50
-				window.addEventListener 'mousemove', onMouseMoveCursor
+	applyValues : ->
+		i = 0
+		while i < @animations.length
+			properties = @animations[i]
 
-		onMouseUp = ->
-			window.removeEventListener 'mousemove', onMouseMoveGraph
-			window.removeEventListener 'mousemove', onMouseMoveCursor
+			if @time < properties.startTime or properties.hasEnded
+				i++
+				continue
 
-		window.addEventListener 'resize', onResize, false
-		@canvas.addEventListener 'mousewheel', onMouseWheel, false
-		@canvas.addEventListener 'mousedown', onMouseDown, false
-		window.addEventListener 'mouseup', onMouseUp, false
+			if @time >= properties.startTime and !properties.hasStarted
+				startValue = properties.target[properties.propertyName]
+
+				if startValue.length and startValue.indexOf('px') > -1
+					properties.startValue = Number(startValue.replace('px', ''))
+					properties.unit = 'px'
+				else
+					properties.startValue = Number(startValue)
+
+				properties.hasStarted = true
+				properties.onStart() if properties.onStart
+
+			duration = properties.endTime - (properties.startTime)
+			t = if duration then (@time - (properties.startTime)) / duration else 1
+			t = Math.max(0, Math.min(t, 1))
+			t = properties.easing(t)
+			value = properties.startValue + (properties.endValue - (properties.startValue)) * t
+			value += properties.unit if properties.unit
+			properties.target[properties.propertyName] = value
+
+			if properties.parent and properties.parent.onUpdateCallback
+				properties.parent.onUpdateCallback properties
+
+			if @time >= properties.endTime and !properties.hasEnded
+				properties.hasEnded = true
+				properties.onEnd() if properties.onEnd
+
+			if t == 1
+				if @loopMode == 0
+					@animations.splice i, 1
+					i--
+			i++
+		return
+
+	update : (deltaTime) ->
+		if typeof deltaTime != 'undefined'
+			if @loopInterval != 0
+				clearInterval @loopInterval
+				@loopInterval = 0
+		else
+			deltaTime = 1 / @fps
+
+		if @playing
+			@totalTime += deltaTime if !@reversed
+			@time += deltaTime if !@reversed
+			@totalTime -= deltaTime if @reversed
+			@time -= deltaTime if @reversed
+
+		if @loopMode != 0
+			animationEnd = @findAnimationEnd()
+			if @time > animationEnd
+				if @loopMode == -1 or @loopCount < @loopMode
+					@time = 0
+					@loopCount++
+					i = 0
+					while i < @anims.length
+						@animations[i].hasStarted = false
+						@animations[i].hasEnded = false
+						i++
+				else
+					@playing = false
+					@time = 0
+
+			if @time < 0
+				@time = animationEnd
+
+		@applyValues()
 
 module.exports = Timeline
