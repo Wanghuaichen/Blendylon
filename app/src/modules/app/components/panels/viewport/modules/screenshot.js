@@ -1,8 +1,5 @@
-
-export default class Screenshot
-{
-	constructor()
-	{
-
-	}
+export default class Screenshot {
+    constructor() {
+        
+    }
 }
