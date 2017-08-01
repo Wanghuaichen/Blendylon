@@ -1,6 +1,6 @@
 <template>
     <div style="padding: 0" class="scrollable-y full-height">
-        <div class="ui inverted accordion" style="padding: 15px;">
+        <div class="ui inverted accordion">
             <div class="title active accordion-header noselect">
                 <i class="dropdown icon"></i> Scenes
             </div>
